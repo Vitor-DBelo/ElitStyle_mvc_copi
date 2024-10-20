@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro</title>
+    <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../public/css/termos_cadastro.css">
+</head>
+<body>
+    <div class="container">
+        <form id="registerForm" action="/register" method="post">
+            <h2>Criar Conta</h2>
+
+            <label for="name">Nome</label>
+            <input type="text" id="name" name="name" placeholder="Seu nome" required>
+
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" placeholder="Crie uma senha" required>
+
+            <label for="phone">Número de Telefone</label>
+            <input type="tel" id="phone" name="phone" placeholder="Seu número de telefone" required>
+
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
+    
+</body>
+</html>

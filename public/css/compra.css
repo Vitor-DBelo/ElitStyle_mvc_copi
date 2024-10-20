@@ -1,0 +1,316 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+
+.Nav_compra {
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #a19e9ec4;
+    margin-bottom: 10px;
+    font-size: 1.04vw;
+    position: fixed;
+    z-index: 1000;
+}
+
+.Nav_compra ul {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.Nav_compra li {
+    margin-right: 30px;
+}
+
+.Nav_compra ul li a {
+    text-decoration: none;
+    color: black;
+    font-size: 25px;
+}
+
+.nav_links_compra a:hover {
+    border-bottom: 1px solid #ffd700;
+    width: 100%;
+}
+
+.logo {
+    margin-left: 20px;
+    font-size: 20px;
+    transform: scale(2.5);
+    transform-origin: left;
+}
+.logo-link{
+    text-decoration: none;
+    color: inherit;
+}
+
+.Dorado {
+    color: #ffd700;
+}
+
+.content_payment {
+    width: 100%;
+    height: 100vh;
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.payment-icon {
+    width: 40px;
+    height: auto;
+    margin-right: 8px;
+}
+
+.option_payment {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.payment-option {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 900px;
+    border: 1px solid #a19e9ec4;
+    margin-left: 10px;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0s ease;
+}
+
+.option_payment h2 {
+    margin-top: 50px;
+    margin-left: 15px;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.payment-option input {
+    margin-right: 10px;
+}
+
+.payment-option span {
+    font-weight: bold;
+}
+
+.lix {
+    margin-left: 5%;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, max-height 0.5s ease;
+}
+
+.card-icons {
+    gap: 10px;
+    text-align: justify;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 1s ease, max-height 1s ease;
+}
+
+.card-icon {
+    width: 40px;
+    height: auto;
+}
+
+.payment-option:hover .lix,
+.payment-option:hover .card-icons {
+    opacity: 1;
+    max-height: 500px;
+}
+
+/* Resumo do Pedido */
+.order-summary {
+    width: 50%;
+    margin-top: 20px;
+    margin-left: 200px;
+    font-size: 20px;
+}
+
+.order-summary h2 {
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.order-details {
+    width: 500px;
+}
+
+.order-details p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+striked {
+    text-decoration: line-through;
+    color: #b0b0b0;
+}
+
+.free {
+    color: green;
+    font-weight: bold;
+}
+
+.total {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+.continue-btn {
+    background-color: black;
+    color: white;
+    width: 500px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    margin-top: 15px;
+}
+
+.continue-btn:hover {
+    background-color: #1e1e1e;
+}
+
+/* Estilos para os modais e formulário de cartão */
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 600px;
+    box-sizing: border-box;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modalCartao .modal-content {
+    max-width: 500px;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#form-checkout {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.container-cartao {
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    background-color: #fff;
+    pointer-events: auto;
+}
+
+#form-checkout input,
+#form-checkout select {
+    height: 40px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+}
+
+#form-checkout__submit {
+    background-color: #151515;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#form-checkout__submit:hover {
+    background-color: #1e1e1e;
+}
+
+.progress-bar {
+    width: 100%;
+}
+
+.container-cartao.placeholder {
+    color: #999;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 16px;
+}

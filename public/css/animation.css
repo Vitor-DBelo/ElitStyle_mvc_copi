@@ -1,0 +1,97 @@
+/* animação de pesquisa */
+.search-pesqui{
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 5px;
+    width: 600px;
+    margin-left: 15vw;
+ 
+  }
+
+.search-input {
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: white;
+    font-size: 18px;
+    flex-grow: 1;
+}
+  
+.search-input::placeholder {
+    color: #ccc;
+}
+  
+
+.search-icon {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transform: scaleX(-1); 
+    padding: 0;
+}
+  
+.search-icon img {
+    width: 24px;
+    height: 24px;
+}
+
+.base-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: black;
+    width: 100%; /* Ocupa todo o comprimento */
+}
+.animation_bar{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background-color: #DAA520;
+    width: 0;
+    animation: loadBar 2s ease-out forwards;
+}
+  
+@keyframes loadBar {
+0% {
+    width: 0;
+}
+100% {
+    width: 89%; 
+}
+}
+
+/* Estilização do carrossel */
+.carousel-proprock {
+    height: 300px;
+    width: 100%;  
+    position: relative;
+    overflow: hidden; 
+}
+
+.carousel-prock {
+    display: flex;
+    gap: 20px;
+    animation: slide 30s linear backwards; 
+}
+
+.item-carousel-roll img {
+    width: 158px;
+    height: 157px;
+}
+
+@keyframes slide {
+    0% {
+        transform: translateX(70px); /* Inicia no canto esquerdo */
+    }
+    100% {
+        transform: translateX(-100%); 
+    }
+}
+
+/* Para quando o mouse passar por cima */
+.carousel-proprock:hover .carousel-prock {
+    animation-play-state: paused; 
+}

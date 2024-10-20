@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filtro de Produtos - Elit Style</title>
+    <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/animation.css">
+    <link rel="stylesheet" href="../public/css/filtro.css">
+    <!-- Adicione o script do ScrollReveal -->
+    <script src="https://unpkg.com/scrollreveal"></script>
+</head>
+<body>
+
+    <header> 
+        <nav class="Nav_Bar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                <span>Elit</span>
+                <span class="Dorado">Style</span>
+                </a>
+            </div>
+            <div class="search-pesqui">
+                <input type="text" class="search-input" placeholder="Pesquise...">
+                <button class="search-icon">
+                    <img src="https://cdn.icon-icons.com/icons2/2645/PNG/512/search_icon_159890.png" alt="Ícone de pesquisa">
+                </button>
+                <div class="base-bar"></div>
+                <div class="animation_bar"></div>
+            </div>
+            <div class="menu-icon">
+                <img src="../public/img/hamburger_menu_icon.png" alt="Menu"> 
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Lançamentos</a></li>
+                <li><a href="#">Marcas</a></li>
+                <li><a href="#">Acessórios</a></li>
+                <li><a href="#">🛒</a></li>
+                <li class="user-profile">
+                    <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="User Profile">
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li><a href="#">Perfil</a></li>
+                            <li><a href="#">Sair</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="layout">
+        <div id="filtro">
+            <h3>Filtros</h3>
+            <form action="index.php?route=filtro" method="GET">
+                <input type="hidden" name="route" value="filtro">
+                <label for="marca">Marca:</label>
+                <select id="marca" name="marca">
+                    <option value="todas">Todas</option>
+                    <option value="Abidas">Abidas</option>
+                    <option value="New era">New era</option>
+                    <option value="New balance">New balance</option>
+                    <option value="Huf">Huf</option>
+                    <option value="Vans">Vans</option>
+                    <option value="Fake">Fake</option>
+                    <option value="Pumba">Pumba</option>
+                    <option value="Lascou-se">Lascou-se</option>
+                </select>
+                <label for="precoMinimo">Preço Mínimo:</label>
+                <input type="number" id="precoMinimo" name="precoMinimo" value="20">
+                <label for="precoMaximo">Preço Máximo:</label>
+                <input type="number" id="precoMaximo" name="precoMaximo" value="100">
+                <label for="tamanho">Tamanho:</label>
+                <select id="tamanho" name="tamanho">
+                    <option value="PP">Extra Pequeno (PP)</option>
+                    <option value="P">Pequeno (P)</option>
+                    <option value="M">Médio (M)</option>
+                    <option value="G">Grande (G)</option>
+                    <option value="GG">Extra grande (GG)</option>
+                </select>
+                <button type="submit" class="filtro-butt">Aplicar Filtros</button>
+            </form>
+        </div>
+
+        <div class="galeria">
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=2">
+                        <img src="../public/img/produtos/conjunto-01.jpg" alt="Produto 1">
+                    </a>
+                    <figcaption>Produto 1</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=8">
+                        <img src="../public/img/produtos/imgl3.png" alt="Produto 2">
+                    </a>
+                    <figcaption>Produto 2</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=9">
+                        <img src="../public/img/produtos/imgl4.png" alt="Produto 3">
+                    </a>
+                    <figcaption>Produto 3</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=10">
+                        <img src="../public/img/produtos/imgl5.png" alt="Produto 4">
+                    </a>
+                    <figcaption>Produto 4</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=11">
+                        <img src="../public/img/produtos/imgl6.png" alt="Produto 5">
+                    </a>
+                    <figcaption>Produto 5</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=12">
+                        <img src="../public/img/produtos/imgl7.png" alt="Produto 6">
+                    </a>
+                    <figcaption>Produto 6</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=7">
+                        <img src="../public/img/produtos/calsa01.jpg" alt="Produto 7">
+                    </a>
+                    <figcaption>Produto 7</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=13">
+                        <img src="../public/img/produtos/imgl8.png" alt="Produto 8">
+                    </a>
+                    <figcaption>Produto 8</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=9">
+                        <img src="../public/img/produtos/imgl4.png" alt="Produto 9">
+                    </a>
+                    <figcaption>Produto 9</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=5">
+                        <img src="../public/img/produtos/conjunto-4.jpg" alt="Produto 10">
+                    </a>
+                    <figcaption>Produto 10</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=8">
+                        <img src="../public/img/produtos/imgl3.png" alt="Produto 11">
+                    </a>
+                    <figcaption>Produto 11</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=4">
+                        <img src="../public/img/produtos/conjunto-03.jpg" alt="Produto 12">
+                    </a>
+                    <figcaption>Produto 12</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=20">
+                        <img src="../public/img/produtos/acessorios/IMGA7.png" alt="Produto 13">
+                    </a>
+                    <figcaption>Produto 13</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=1">
+                        <img src="../public/img/produtos/calsa01.jpg" alt="Produto 14">
+                    </a>
+                    <figcaption>Produto 14</figcaption>
+                </figure>
+            </div>
+            <div class="galeria-item">
+                <figure class="square">
+                    <a href="produto.php?id=14">
+                        <img src="../public/img/produtos/acessorios/IMGA1.png" alt="Produto 15">
+                    </a>
+                    <figcaption>Produto 15</figcaption>
+                </figure>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adicione este script no final do body -->
+    <script src="../public/script/app.js"></script>
+</body>
+</html>

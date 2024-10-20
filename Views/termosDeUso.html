@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Termos e Condições</title>
+    <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../public/css/termos_cadastro.css">
+   
+</head>
+<body>
+    <div class="container">
+        <div class="privacy-policy">
+            <h3>Política de Privacidade</h3>
+            <p><strong>Última Atualização: 27/09/2024</strong></p>
+            <ul>
+                <li><strong>1. Coleta de Dados:</strong> Coletamos informações como nome, e-mail, endereço de entrega e dados de pagamento ao fazer um pedido.</li>
+                <li><strong>2. Uso dos Dados:</strong> Utilizamos seus dados para processar pedidos, comunicar promoções, melhorar nossos serviços e atender a solicitações.</li>
+                <li><strong>3. Compartilhamento de Dados:</strong> Seus dados podem ser compartilhados com parceiros de entrega e processamento de pagamentos, sempre respeitando sua privacidade.</li>
+                <li><strong>4. Segurança:</strong> Implementamos medidas de segurança para proteger suas informações contra acesso não autorizado.</li>
+                <li><strong>5. Direitos dos Usuários:</strong> Você pode acessar, corrigir ou solicitar a exclusão de seus dados a qualquer momento, entrando em contato conosco.</li>
+                <li><strong>6. Cookies:</strong> Utilizamos cookies para melhorar sua experiência no site. Você pode gerenciar suas preferências de cookies nas configurações do seu navegador.</li>
+                <li><strong>7. Alterações na Política:</strong> Reservamo-nos o direito de atualizar esta política. Quaisquer mudanças serão publicadas aqui, e recomendamos que você a revise periodicamente.</li>
+            </ul>
+            <p>Para dúvidas, entre em contato: [e-mail de contato].</p>
+
+            <div class="terms-box">
+                <input type="checkbox" id="acceptTerms" name="acceptTerms" required>
+                <label for="acceptTerms">Eu aceito os Termos e Condições</label>
+            </div>
+
+            <button id="proceedButton" disabled>Prosseguir para Cadastro</button>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('acceptTerms').addEventListener('change', function() {
+            const proceedButton = document.getElementById('proceedButton');
+            proceedButton.disabled = !this.checked;
+        });
+
+        document.getElementById('proceedButton').addEventListener('click', function() {
+            window.location.href = "Cadastro.html"; // Redireciona para a página de cadastro
+        });
+    </script>
+</body>
+</html>

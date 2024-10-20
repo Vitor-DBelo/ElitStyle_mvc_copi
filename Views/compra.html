@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>br.ElitStyle</title>
+    <link rel="stylesheet" href="../public/css/compra.css">
+    <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
+</head>
+<body>
+    <header> 
+        <nav class="Nav_compra">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span>Elit</span>
+                    <span class="Dorado">Style</span>
+                </a>
+            </div>
+            <ul class="nav_links_compra">
+                <li><a href="index.html">CONTINUAR COMPRANDO</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="content_payment">
+            <div class="option_payment">
+                <h2>Método de Pagamento</h2>
+                
+                <label class="payment-option">
+                    <div>
+                        <input type="radio" name="payment_method" value="pix" class="payment">
+                        <img src="../public/img/icon/icon_pix.png" alt="Pix" class="payment-icon">
+                        <span>Pix</span> 
+                        <div class="card-icons">
+                            <p>Pagamento aprovado na hora. Você poderá finalizar o seu Pix por meio do QR Code ou código no banco que preferir! Mas fique atento, este código só será válido por 4 horas. Esta é uma compra internacional, sujeita a uma operação de câmbio, que será processada pelo DLOCAL de acordo com seus termos e condições. Ao clicar em comprar, você dá ciência e aceita os termos desta transação.</p>
+                        </div>
+                    </div>
+                    
+                </label>
+            
+                
+                <label class="payment-option">
+                    <div>
+                        <input type="radio" name="payment_method" value="cartao" class="payment">
+                        <img src="../public/img/icon/icon_cartao.png" alt="Cartão" class="payment-icon">
+                        <span style="font-weight: bold;">Cartão de credito</span>
+                    </div>
+                    
+                    <div class="lix">
+                        <p>Parcelamento de 1-6x, 1-3x sem juros, 4-6x necessita-se de pagar juros</p>
+
+                        <div class="card-icons">
+                            <img src="../public/img/icon/visa_icon.png" alt="Visa" class="card-icon">
+                            <img src="../public/img/icon/mastercard_icon.png" alt="MasterCard" class="card-icon">
+                        </div>
+                    </div>
+                    
+                </label>
+            
+                
+                <label class="payment-option">
+                    <div>
+                        <input type="radio" name="payment_method" value="boleto" class="payment">
+                        <img src="../public/img/icon/icon_boleto.png" alt="Boleto" class="payment-icon">
+                        <span>Boleto</span>   
+                    </div>
+                    <div class="card-icons">
+                        <p>O prazo de validade do seu boleto é de até 3 dias úteis, você pode imprimir e pagar no banco ou utilizar o código que será enviado para o email cadastrado para pagar pela internet. Após o pagamento, o status do seu pedido será atualizado também em até 3 dias úteis (o tempo de atualização pode ser maior durante feriados). Além disso, você precisa ter 16 anos ou mais para que a sua compra seja autorizada.Esta é uma compra internacional, sujeita a uma operação de câmbio, que será processada pelo DLOCAL de acordo com seus termos e condições. Ao clicar em comprar, você dá ciência e aceita os termos desta transação.O boleto não permite reembolsos através do mesmo método de pagamento.</p>
+                    </div>
+                </label>
+            </div>
+            
+
+            <div class="order-summary">
+                <h2>Resumo do pedido</h2>
+                <div class="order-details">
+                    <p>Valor Total: <span class="striked">R$536,90</span></p>
+                    <p>Subtotal: <span>R$31,90</span></p>
+                    <p>Entrega garantida: <span class="free">FREE</span></p>
+                    <p><strong>Total Geral:</strong> <span class="total">R$536,90</span></p>
+                </div>
+                <button class="continue-btn" onclick="continuarPagamento()">CONTINUAR</button>
+            </div>
+        </div> 
+    </main>
+
+    <!-- Modais -->
+    <div id="modalPix" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Pagamento via PIX</h2>
+            <img src={`data:image/jpeg;base64,${qr_code_base64}`}/>
+            <p>Código PIX: <span id="pixCode">12345678901234567890</span></p>
+            <button onclick="copiarCodigo()">Copiar código</button>
+        </div>
+    </div>
+
+    <div id="modalCartao" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Pagamento com Cartão</h2>
+            <form id="form-checkout">
+                <div class="form-group">
+                    <label for="form-checkout__cardNumber">Número do Cartão</label>
+                    <div id="form-checkout__cardNumber" class="container-cartao placeholder">XXXX XXXX XXXX XXXX</div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-checkout__expirationDate">Data de Expiração</label>
+                        <div id="form-checkout__expirationDate" class="container-cartao placeholder">MM/AA</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="form-checkout__securityCode">Código de MVC</label>
+                        <div id="form-checkout__securityCode" class="container-cartao placeholder">CVC</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="form-checkout__cardholderName">Nome no Cartão</label>
+                    <input type="text" id="form-checkout__cardholderName" />
+                </div>
+                <div class="form-group">
+                    <label for="form-checkout__installments">Parcelas</label>
+                    <select id="form-checkout__installments">
+                        <option value="1">1x sem juros</option>
+                        <option value="2">2x sem juros</option>
+                        <option value="3">3x sem juros</option>
+                        <option value="4">4x</option>
+                        <option value="5">5x</option>
+                        <option value="6">6x</option>
+                        <option value="7">7x</option>
+                        <option value="8">8x</option>
+                        <option value="9">9x</option>
+                        <option value="10">10x</option>
+                        <option value="11">11x</option>
+                        <option value="12">12x</option>
+                    </select>
+                </div>
+                <button type="submit" id="form-checkout__submit">Pagar</button>
+                <progress value="0" class="progress-bar">Carregando...</progress>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalBoleto" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Pagamento via Boleto</h2>
+            <p>Informações sobre o pagamento via boleto aqui...</p>
+        </div>
+    </div>
+
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <script src="../public/script/compra.js"></script>
+    <script>
+            // Inicializar o SDK do Mercado Pago
+            const mp = new MercadoPago('TEST-4444444444444444');
+
+            // Criar o campo de número do cartão
+            const cardNumberElement = mp.fields.create('cardNumber', {
+                placeholder: "Número do cartão"
+            }).mount('form-checkout__cardNumber');
+
+            // Criar o campo de data de expiração
+            const expirationDateElement = mp.fields.create('expirationDate', {
+                placeholder: "MM/YY"
+            }).mount('form-checkout__expirationDate');
+
+            // Criar o campo de código de segurança
+            const securityCodeElement = mp.fields.create('securityCode', {
+                placeholder: "Código de segurança"
+            }).mount('form-checkout__securityCode');
+
+            // Remover a classe 'placeholder' dos containers após a montagem dos campos
+            document.getElementById('form-checkout__cardNumber').classList.remove('placeholder');
+            document.getElementById('form-checkout__expirationDate').classList.remove('placeholder');
+            document.getElementById('form-checkout__securityCode').classList.remove('placeholder');
+
+            // Detectar a bandeira do cartão
+            cardNumberElement.on('binChange', (data) => {
+                const cardType = data.card_type;
+                if (cardType) {
+                    console.log('Bandeira do cartão:', cardType.name);
+                    // Aqui você pode atualizar a interface para mostrar a bandeira do cartão
+                }
+            });
+
+            // Lidar com o envio do formulário
+            document.getElementById('form-checkout').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // Aqui você pode adicionar a lógica para processar o pagamento
+                // Por exemplo, você pode fazer uma chamada AJAX para o seu backend
+                // para processar o pagamento usando as informações do cartão
+            });
+      
+    </script>
+</body>
+</html>

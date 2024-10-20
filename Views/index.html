@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elit Style</title>
+    <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="../public/css/style.css">
+    <link rel="stylesheet" href="../public/css/animation.css">
+</head>
+<body>
+
+    <header> 
+        <nav class="Nav_Bar">
+            <div class="logo">
+                <a href="index.html" class="logo-link">
+                    <span>Elit</span>
+                    <span class="Dorado">Style</span>
+                </a>
+            </div>
+            <div class="search-pesqui">
+                <input type="text" class="search-input" placeholder="Pesquise...">
+                <button class="search-icon">
+                  <img src="https://cdn.icon-icons.com/icons2/2645/PNG/512/search_icon_159890.png" alt="Ícone de pesquisa">
+                </button>
+                <div class="base-bar"></div>
+                <div class="animation_bar"></div>
+            </div>
+            <div class="menu-icon">
+                <img src="../public/img/icon/icon_hamburger.png" alt="Menu"> 
+            </div>
+            <ul class="nav-links">
+                <li><a href="#">Lançamentos</a></li>
+                <li><a href="#">Marcas</a></li>
+                <li><a href="#">Acessórios</a></li>
+                <li><a href="#">🛒</a></li>
+                <li class="user-profile">
+                    <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
+                    <div class="dropdown-menu">
+                        <ul>
+                            <li><a href="#">Editar</a></li>
+                            <li><a href="#">Login</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="content">
+            <div class="img-container">
+                <img src="../public/img/IMGA0.png" alt="Imagem 1">
+                <source srcset="image1_0.jpg" media="(min-width: 370px)">
+
+                <img src="../public/img/IMGA00.png" alt="Imagem 2">
+                <source srcset="image0_0.jpg" media="(min-width: 370px)">
+            </div>
+            <div class="texto">
+                <p>Transforme seu guarda-roupa e eleve seu estilo com a <span class="elite">Elite</span> <span class="Dorado">Style</span>, sua referência em moda Streetwear.</p>
+                <br>
+                <p>Oferecemos uma experiência única de moda, onde cada peça é escolhida a dedo para trazer elegância, sofisticação e uma dose de atitude ao seu dia a dia.</p>
+            </div>
+        </div>
+    </main>
+    
+
+    <section class="produtos_destaque">
+       <div class="title_grid">
+            <h1 class="title_produtos"><a class="link_produtos" href="#">Lançamentos</a></h1>
+       </div>
+       <section class="grid_produtos_destaque">
+            <div class="item">
+                <a href="produto.php?id=1"><img src="../public/img/produtos/calsa01.jpg" alt="Calça"></a>
+                <p><strong>ElittStritt</strong><br>Conjunto exclusivo de parceria, a calça Eleiitt combina conforto e estilo esportivo em um design luxuoso e único.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=2"><img src="../public/img/produtos/conjunto-01.jpg" alt="Conjunto 01"></a>
+                <p><strong>Noir Royale Set</strong><br>Conjunto com jaqueta preta e calça de logo exclusivo. Luxo e estilo urbano imponente.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=3"><img src="../public/img/produtos/conjunto-02.jpg" alt="Conjunto 02"></a>
+                <p><strong>Elysian Elite</strong><br>Casaco preto e camiseta "Elitstyle". Exclusividade, classe e conforto.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=4"><img src="../public/img/produtos/conjunto-03.jpg" alt="Conjunto 03"></a>
+                <p><strong>Conjunto ElittStyle</strong><br>Casaco preto e camiseta "Elitstyle". Exclusividade, classe e conforto.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=5"><img src="../public/img/produtos/conjunto-4.jpg" alt="Conjunto 04"></a>
+                <p><strong>Imperial Beige Ensemble</strong><br>Conjunto com jaqueta bege refinada. Discreto e sofisticado.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=6"><img src="../public/img/produtos/imgl1.png" alt="Imagem 1"></a>
+                <p><strong>Supreme Streetwear Edition</strong><br>Suéter premium com logo "Streetwear".Minimalista,confortável e elegante.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=7"><img src="../public/img/produtos/imgl2.png" alt="Imagem 2"></a>
+                <p><strong>Obsidian Luxe Tee</strong><br>Camiseta preta unissex. Simples, exclusiva e luxuosa.</p>
+            </div>
+            <div class="item">
+                <a href="produto.php?id=8"><img src="../public/img/produtos/imgl3.png" alt="Imagem 3"></a>
+                <p><strong>Emerald Prestige Joggers</strong><br>Calça de moletom verde com logo "Streetwear". Casual, confortável e sofisticada.</p>
+            </div>
+        </section>
+    </section>
+
+    <section class="Sec-carousel">
+        <div class="title_grid">
+            <h1 class="title_produtos"><a class="link_produtos" href="#">Marcas</a></h1>
+       </div>
+        <div class="carousel-container">
+            <div class="carousel">
+                <span class="prev" onclick="moveSlide(-1)">&#60;</span>
+                <div class="carousel-track-container">
+                    <div class="carousel-track">
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m8.png" alt="Abibas">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m1.png" alt="Pumba">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m2.png" alt="Naiki">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m3.png" alt="Lascou-se">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m4.png" alt="Marca 5">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m5.png" alt="Marca 6">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m6.png" alt="Marca 7">
+                        </div>
+                        <div class="carousel-slide">
+                            <img src="../public/img/marcas/m7.png" alt="Marca 8">
+                        </div>
+                    </div>
+                </div>
+                <span class="next" onclick="moveSlide(1)">&#62;</span>
+            </div>
+        </div>
+    </section>
+    
+    <section class="produtos_destaque">
+        <div class="title_grid">
+             <h1 class="title_produtos"><a class="link_produtos" href="#">Acessórios</a></h1>
+        </div>
+        <section class="grid_produtos_destaque">
+             <div class="item">
+                 <a href="produto.php?id=14"><img src="../public/img/produtos/acessorios/IMGA1.png" alt="Acessório 1"></a>
+                 <p><strong>Boné Signature</strong><br>Boné de edição limitada com design minimalista, destacando o logo exclusivo da marca em uma peça moderna.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=15"><img src="../public/img/produtos/acessorios/IMGA2.png" alt="Acessório 2"></a>
+                 <p><strong>Velano Primus</strong><br>Boné exclusivo em tecido refinado, moldado para líderes que valorizam a distinção em cada detalhe.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=16"><img src="../public/img/produtos/acessorios/IMGA3.png" alt="Acessório 3"></a>
+                 <p><strong>Lúmen Argentis</strong><br>Pulseira de elos prateados radiantes, feita para refletir a luz de quem a carrega com autoridade e elegância.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=17"><img src="../public/img/produtos/acessorios/IMGA4.png" alt="Acessório 4"></a>
+                 <p><strong>Eclipse Side</strong><br>Um colar singular, capturando a essência das estrelas e um brilho único que transcende o tempo.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=18"><img src="../public/img/produtos/acessorios/IMGA5.png" alt="Acessório 5"></a>
+                 <p><strong>Aurum Noctis</strong><br>mistura o preto profundo e o branco puro, ideal para quem transita entre o clássico e o moderno com elegância natural.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=19"><img src="../public/img/produtos/acessorios/IMGA6.png" alt="Acessório 6"></a>
+                 <p><strong>Solaris Prism</strong><br>Chapéu vibrante com bordado multicolorido, representando a fusão entre o estilo urbano e o luxo atemporal.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=20"><img src="../public/img/produtos/acessorios/IMGA7.png" alt="Acessório 7"></a>
+                 <p><strong>Cortez Argentum</strong><br> Uma corrente de elos espessos e polidos, criada para aqueles que valorizam a presença imponente e o estilo refinado.</p>
+             </div>
+             <div class="item">
+                 <a href="produto.php?id=21"><img src="../public/img/produtos/acessorios/IMGA8.png" alt="Acessório 8"></a>
+                 <p><strong>Véloce Platinum</strong><br>Uma corrente prateada de design elegante e sutil, ideal para compor visuais sofisticados e minimalistas com um toque de exclusividade.</p>
+             </div>
+         </section>
+     </section>
+     <script src="../public/script/app.js"></script>
+</body>
+</html>
