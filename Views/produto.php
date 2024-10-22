@@ -87,8 +87,8 @@ if (!function_exists('base_url')) {
                     <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
                     <div class="dropdown-menu">
                         <ul>
-                            <li><a href="#">Editar</a></li>
-                            <li><a href="#">Login</a></li>
+                            <li><a href="usuario.html">Editar</a></li>
+                            <li><a href="login.html">Login</a></li>
                         </ul>
                     </div>
                 </li>
