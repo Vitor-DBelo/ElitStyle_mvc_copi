@@ -7,6 +7,348 @@
     <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="../public/css/animation.css">
+    <style>
+        #body-carrinho {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #151515;
+}
+
+#header-carrinho {
+    background-color: #151515;
+    color: #fff;
+    text-align: center;
+}
+
+#main-carrinho {
+    padding: 2rem;
+}
+
+#carrinho {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    gap: 2rem;
+}
+
+#itens-carrinho {
+    flex: 3;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#resumo-carrinho {
+    flex: 1;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    align-self: flex-start;
+}
+
+#resumo-carrinho h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2em;
+}
+
+.total-crn {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#total-carrinho {
+    color: #ffd700;
+}
+
+#finalizar-compra {
+    display: block;
+    width: auto;
+    padding: 0.6rem 1rem;
+    background-color: #ffd700;
+    color: #151515;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+    margin-left: auto;
+}
+
+#finalizar-compra:hover {
+    background-color: #ffbf00;
+}
+
+.item-carrinho {
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 5px;
+    background-color: #252525;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 10px;
+}
+
+.item-imagem {
+    width: 100px;
+    height: 100px;
+    background-color: #ddd;
+    border-radius: 5px;
+}
+
+.item-detalhes {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.item-texto {
+    flex-grow: 1;
+}
+
+.item-nome {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-bottom: 0.3rem;
+}
+
+.item-descricao {
+    font-size: 0.9em;
+    color: #666;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-info-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.item-info-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    height: 50px;
+}
+
+.item-info-label {
+    color: #666;
+    margin-bottom: 0.1rem;
+    font-size: 0.8em;
+}
+
+.item-info-valor {
+    font-weight: bold;
+    font-size: 0.95em;
+}
+
+.quantidade-controle {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.quantidade-controle button {
+    background-color: transparent;
+    border: none; /* Removida a borda */
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff; /* Alterado para branco */
+    font-size: 0.9em;
+}
+
+.quantidade-controle button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.item-preco-total {
+    color: #ffd700;
+}
+
+.modal_comprar {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: #151515; /* Fundo #151515 */
+}
+
+.modal-content {
+    background-color: #151515;
+    margin: 0;
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+    overflow-y: auto;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.close {
+    color: #ffffff;
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+.close:hover,
+.close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
+#top-carrinho {
+    text-align: center;
+    padding: 20px 0;
+}
+
+#top-carrinho h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #ffffff; /* Alterado para branco */
+}
+
+#carrinho {
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#itens-carrinho {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+#top-carrinho h1,
+#resumo-carrinho h2,
+.item-nome,
+.item-descricao,
+.item-info-label,
+.item-info-valor {
+    color: #ffffff; /* Alterado para branco */
+}
+
+#carrinho {
+    max-width: 100%;
+    width: 100%;
+}
+
+.item-carrinho {
+    background-color: #252525;
+    border: 1px solid #333;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+#resumo-carrinho {
+    background-color: #252525;
+    border: 1px solid #333;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+#resumo-carrinho h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2em;
+}
+
+.total-crn {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+#finalizar-compra {
+    background-color: #ffd700;
+    color: #151515;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    display: block;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#finalizar-compra:hover {
+    background-color: #ffcc00;
+}
+
+.item-info-box {
+    background-color: #f0f0f0;
+}
+
+#itens-carrinho {
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.item-info-label,
+.item-info-valor,
+.quantidade-controle button,
+.item-preco-total {
+    color: #ffffff; /* Alterado para branco */
+}
+
+.quantidade-controle button {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.quantidade-controle button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.item-info-box {
+    background-color: #252525; /* Alterado para um tom mais escuro */
+    border: 1px solid #333;
+}
+    </style>
 </head>
 <body>
 
@@ -33,7 +375,7 @@
                 <li><a href="#lançamentos">Lançamentos</a></li>
                 <li><a href="#marcas">Marcas</a></li>
                 <li><a href="#acessorios">Acessórios</a></li>
-                <li><a href="#">🛒</a></li>
+                <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
                     <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
                     <div class="dropdown-menu">
@@ -46,7 +388,24 @@
             </ul>
         </nav>
     </header>
-    
+    <div class="modal_comprar" id="modal-carrinho" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="top-carrinho">
+                <h1>Seu Carrinho</h1>
+            </div>
+            <div id="main-carrinho">
+                <div id="carrinho">
+                    <div id="itens-carrinho"></div>
+                    <div id="resumo-carrinho">
+                        <h2>Resumo do Pedido</h2>
+                        <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
+                        <a href="#" id="finalizar-compra">Finalizar Compra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <main>
         <div class="content">
             <div class="img-container">
@@ -147,7 +506,7 @@
     
     <section class="produtos_destaque" id="acessorios">
         <div class="title_grid">
-             <h1 class="title_produtos"><a class="link_produtos" href="#">Acessórios</a></h1>
+             <h1 class="title_produtos"><a class="link_produtos" href="filtro.html">Acessórios</a></h1>
         </div>
         <section class="grid_produtos_destaque">
              <div class="item">
@@ -185,5 +544,122 @@
          </section>
      </section>
      <script src="../public/script/app.js"></script>
+     <script>let carrinho = [];
+
+        // Função para simular a adição de itens ao carrinho
+        function simularAdicionarItens() {
+            const itensSimulados = [
+                { nome: "Camiseta", preco: 39.90, quantidade: 2, descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
+                { nome: "Calça Jeans", preco: 89.90, quantidade: 1, descricao: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
+                { nome: "Vestido", preco: 129.90, quantidade: 1, descricao: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." },
+                { nome: "Jaqueta de Couro", preco: 199.90, quantidade: 1, descricao: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
+                { nome: "Saia Midi", preco: 79.90, quantidade: 3, descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
+            ];
+        
+            itensSimulados.forEach(item => adicionarAoCarrinho(item.nome, item.preco, item.quantidade, item.descricao));
+        }
+        
+        function adicionarAoCarrinho(nome, preco, quantidade, descricao) {
+            carrinho.push({nome, preco, quantidade, descricao});
+            atualizarCarrinho();
+        }
+        
+        function atualizarQuantidade(index, delta) {
+            carrinho[index].quantidade += delta;
+            if (carrinho[index].quantidade <= 0) {
+                // Remove o item do carrinho se a quantidade for zero ou negativa
+                carrinho.splice(index, 1);
+            }
+            atualizarCarrinho();
+        }
+        
+        function atualizarCarrinho() {
+            let listaCarrinho = document.getElementById('itens-carrinho');
+            let resumoCarrinho = document.getElementById('resumo-carrinho');
+            
+            listaCarrinho.innerHTML = '';
+            let total = 0;
+        
+            carrinho.forEach((item, index) => {
+                let itemDiv = document.createElement('div');
+                itemDiv.className = 'item-carrinho';
+                itemDiv.innerHTML = `
+                    <div class="item-imagem"></div>
+                    <div class="item-detalhes">
+                        <div class="item-texto">
+                            <div class="item-nome">${item.nome}</div>
+                            <div class="item-descricao">${item.descricao}</div>
+                        </div>
+                        <div class="item-info-container">
+                            <div class="item-info-box">
+                                <span class="item-info-label">Quantidade</span>
+                                <div class="quantidade-controle">
+                                    <button onclick="atualizarQuantidade(${index}, -1)">-</button>
+                                    <span class="item-info-valor">${item.quantidade}</span>
+                                    <button onclick="atualizarQuantidade(${index}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="item-info-box">
+                                <span class="item-info-label">Valor unitário</span>
+                                <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
+                            </div>
+                            <div class="item-info-box">
+                                <span class="item-info-label">Preço</span>
+                                <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listaCarrinho.appendChild(itemDiv);
+                total += item.preco * item.quantidade;
+            });
+        
+            // Atualiza o resumo do carrinho
+            resumoCarrinho.innerHTML = `
+                <h2>Resumo do Pedido</h2>
+                <div class="total">
+                    <span>Total:</span>
+                    <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
+                </div>
+                <a href="#" id="finalizar-compra">Finalizar Compra</a>
+            `;
+        
+            // Adiciona evento de clique ao link
+            document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+        }
+        
+        function finalizarCompra(event) {
+            event.preventDefault(); // Previne o comportamento padrão do link
+            alert('Redirecionando para a página de checkout...');
+            // Aqui você pode adicionar a lógica para redirecionar para a página de checkout
+            // Por exemplo: window.location.href = '/checkout';
+        }
+        
+        // Simular a adição de itens quando a página carregar
+        window.onload = simularAdicionarItens;</script>
+     <script>
+     // Adicione este código no final do seu script
+     document.addEventListener('DOMContentLoaded', function() {
+         const carrinhoIcon = document.getElementById('carrinho-icon');
+         const modal = document.getElementById('modal-carrinho');
+         const closeBtn = modal.querySelector('.close');
+
+         carrinhoIcon.addEventListener('click', function(e) {
+             e.preventDefault();
+             modal.style.display = 'block';
+             document.body.style.overflow = 'hidden';
+         });
+
+         closeBtn.addEventListener('click', function() {
+             modal.style.display = 'none';
+             document.body.style.overflow = '';
+         });
+
+         // Removemos o evento de clique na janela para fechar o modal
+
+         // Simular a adição de itens quando a página carregar
+         simularAdicionarItens();
+     });
+     </script>
 </body>
 </html>
