@@ -19,13 +19,13 @@ CREATE TABLE user_db1 (
 -- Tabela endereco
 CREATE TABLE endereco (
     id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+    numero VARCHAR(10),
+    rua VARCHAR(100),
+	bairro VARCHAR(100),
+    cep VARCHAR(20) NOT NULL,
     estado VARCHAR(50) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
-    bairro VARCHAR(100),
-    rua VARCHAR(100),
-    numero VARCHAR(10),
-    cep VARCHAR(20) NOT NULL,
-    tipo_endereco VARCHAR(50),
+    informacoes_adicionais VARCHAR(255),
     id_user_db1 INT,
     FOREIGN KEY (id_user_db1) REFERENCES user_db1(id_user) ON DELETE CASCADE
 );
@@ -126,5 +126,8 @@ INSERT INTO categoria (nome_categoria, id_produto) VALUES
 -- Modifique os caminhos das imagens nos INSERTs
 UPDATE produto SET url = REPLACE(url, '../public/', '/');
 
+select * from user_db1 ;
+
+select * from endereco ;
 -- Remover o banco de dados, caso necessário
 DROP DATABASE elitstyle;

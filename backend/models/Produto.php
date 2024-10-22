@@ -1,6 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../db/database.php';
+// Definir o caminho base do projeto
+define('BASE_PATH', 'D:/xamp/htdocs/elitstyle_mvc_copi/');
+
+// Incluir o arquivo database.php
+require_once BASE_PATH . 'backend/db/database.php';
 
 class Produto {
     private $conn;

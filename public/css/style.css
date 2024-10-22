@@ -481,7 +481,7 @@ main-produto{
     background-color: transparent;
     border: none;
     cursor: pointer;
-    margin-left: 179px;
+    margin-right: 20px;
     font-size: 20px;
     padding: 20px;
 }
@@ -515,6 +515,7 @@ main-produto{
     margin-left: 679px;
     margin-bottom: 20px;
 }
+
 @media screen and (max-width: 1628px){
     .logo{
         transform: scale(1.3); 
