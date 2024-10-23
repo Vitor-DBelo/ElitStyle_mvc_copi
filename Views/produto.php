@@ -57,6 +57,7 @@ if (!function_exists('base_url')) {
     <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="../public/css/animation.css">
+    <link rel="stylesheet" href="../public/css/modal.css">
 </head>
 <body>
     <header> 
@@ -79,10 +80,10 @@ if (!function_exists('base_url')) {
                 <img src="../public/img/icon/icon_hamburger.png" alt="Menu"> 
             </div>
             <ul class="nav-links">
-                <li><a href="#">Lançamentos</a></li>
-                <li><a href="#">Marcas</a></li>
-                <li><a href="#">Acessórios</a></li>
-                <li><a href="#">🛒</a></li>
+                <li><a href="#lançamentos">Lançamentos</a></li>
+                <li><a href="#marcas">Marcas</a></li>
+                <li><a href="#acessorios">Acessórios</a></li>
+                <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
                     <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
                     <div class="dropdown-menu">
@@ -95,7 +96,24 @@ if (!function_exists('base_url')) {
             </ul>
         </nav>
     </header>
-    
+    <div class="modal_comprar" id="modal-carrinho" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="top-carrinho">
+                <h1>Seu Carrinho</h1>
+            </div>
+            <div id="main-carrinho">
+                <div id="carrinho">
+                    <div id="itens-carrinho"></div>
+                    <div id="resumo-carrinho">
+                        <h2>Resumo do Pedido</h2>
+                        <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
+                        <a href="compra.html" id="finalizar-compra">Finalizar Compra</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <main class="main-produto">
         <div class="content-pg-Produto">
            <div class="produto-descri">
@@ -119,7 +137,13 @@ if (!function_exists('base_url')) {
                 <h3><span>R$ </span><?php echo number_format($produto['preco'], 2, ',', '.'); ?></h3>
                 <div class="button-submit">
                     <button type="submit">Comprar</button>
-                    <button type="submit">adicionar ao carrinho</button>
+                    <button type="button" id="adicionar-ao-carrinho" 
+                        data-id="<?php echo $produto['id_produto']; ?>" 
+                        data-nome="<?php echo htmlspecialchars($produto['nome']); ?>" 
+                        data-preco="<?php echo $produto['preco']; ?>" 
+                        data-descricao="<?php echo htmlspecialchars($produto['descricao']); ?>">
+                        Adicionar ao carrinho
+                    </button>
                 </div>
             </div>
         </div>
@@ -154,5 +178,182 @@ if (!function_exists('base_url')) {
         </div>
     </main>
     <script src="../public/script/app.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btnAdicionarAoCarrinho = document.getElementById('adicionar-ao-carrinho');
+        const carrinhoIcon = document.getElementById('carrinho-icon');
+        const modal = document.getElementById('modal-carrinho');
+        const closeBtn = modal.querySelector('.close');
+        
+        btnAdicionarAoCarrinho.addEventListener('click', function() {
+            const id = this.getAttribute('data-id');
+            const nome = this.getAttribute('data-nome');
+            const preco = parseFloat(this.getAttribute('data-preco'));
+            const descricao = this.getAttribute('data-descricao');
+            
+            adicionarAoCarrinho(id, nome, preco, descricao);
+            mostrarNotificacao(`${nome} adicionado com sucesso`);
+        });
+
+        carrinhoIcon.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+            carregarCarrinho();
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        });
+
+        function adicionarAoCarrinho(id, nome, preco, descricao) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            let item = carrinho.find(item => item.id === id);
+            
+            if (item) {
+                item.quantidade++;
+            } else {
+                const imagemUrl = document.querySelector('.produto-descri img').src;
+                carrinho.push({id, nome, preco, descricao, quantidade: 1, imagemUrl});
+            }
+            
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            atualizarIconeCarrinho();
+        }
+
+        function carregarCarrinho() {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            atualizarCarrinho(carrinho);
+        }
+
+        function atualizarCarrinho(carrinho) {
+            let listaCarrinho = document.getElementById('itens-carrinho');
+            let resumoCarrinho = document.getElementById('resumo-carrinho');
+            
+            listaCarrinho.innerHTML = '';
+            let total = 0;
+
+            carrinho.forEach((item, index) => {
+                let itemDiv = document.createElement('div');
+                itemDiv.className = 'item-carrinho';
+                itemDiv.innerHTML = `
+                    <div class="item-imagem">
+                        <img src="${item.imagemUrl}" alt="${item.nome}">
+                    </div>
+                    <div class="item-detalhes">
+                        <div class="item-texto">
+                            <div class="item-nome">${item.nome}</div>
+                            <div class="item-descricao">${item.descricao}</div>
+                        </div>
+                        <div class="item-info-container">
+                            <div class="item-info-box">
+                                <span class="item-info-label">Quantidade</span>
+                                <div class="quantidade-controle">
+                                    <button onclick="atualizarQuantidade(${index}, -1)">-</button>
+                                    <span class="item-info-valor">${item.quantidade}</span>
+                                    <button onclick="atualizarQuantidade(${index}, 1)">+</button>
+                                </div>
+                            </div>
+                            <div class="item-info-box">
+                                <span class="item-info-label">Valor unitário</span>
+                                <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
+                            </div>
+                            <div class="item-info-box">
+                                <span class="item-info-label">Preço</span>
+                                <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                listaCarrinho.appendChild(itemDiv);
+                total += item.preco * item.quantidade;
+            });
+
+            resumoCarrinho.innerHTML = `
+                <h2>Resumo do Pedido</h2>
+                <div class="total">
+                    <span>Total:</span>
+                    <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
+                </div>
+                <a href="compra.html" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+            `;
+
+            document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+        }
+
+        window.atualizarQuantidade = function(index, delta) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            carrinho[index].quantidade += delta;
+            if (carrinho[index].quantidade <= 0) {
+                carrinho.splice(index, 1);
+            }
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            atualizarCarrinho(carrinho);
+            atualizarIconeCarrinho();
+        }
+
+        function finalizarCompra(event) {
+            event.preventDefault();
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            if (carrinho.length > 0) {
+                window.location.href = 'compra.html';
+            } else {
+                mostrarMensagemTemporaria('Seu carrinho está vazio. Adicione itens antes de finalizar a compra.');
+            }
+        }
+
+        function mostrarMensagemTemporaria(mensagem) {
+            const mensagemDiv = document.createElement('div');
+            mensagemDiv.textContent = mensagem;
+            mensagemDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #ff6b6b;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 5px;
+                z-index: 1000;
+                transition: opacity 0.5s ease-in-out;
+            `;
+            document.body.appendChild(mensagemDiv);
+
+            setTimeout(() => {
+                mensagemDiv.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(mensagemDiv);
+                }, 500);
+            }, 3000);
+        }
+
+        function atualizarIconeCarrinho() {
+            const carrinhoIcon = document.querySelector('.nav-links a[href="#"]');
+            carrinhoIcon.textContent = '🛒';
+        }
+
+        function mostrarNotificacao(mensagem) {
+            const notificacao = document.createElement('div');
+            notificacao.className = 'notification';
+            notificacao.textContent = mensagem;
+            document.body.appendChild(notificacao);
+
+            setTimeout(() => {
+                notificacao.classList.add('show');
+            }, 10);
+
+            setTimeout(() => {
+                notificacao.classList.remove('show');
+                setTimeout(() => {
+                    notificacao.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        // Atualizar o ícone do carrinho ao carregar a página
+        atualizarIconeCarrinho();
+    });
+    </script>
 </body>
 </html>

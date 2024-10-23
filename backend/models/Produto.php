@@ -1,7 +1,7 @@
 <?php
 
 // Definir o caminho base do projeto
-define('BASE_PATH', 'D:/xamp/htdocs/elitstyle_mvc_copi/');
+define('BASE_PATH', dirname(__DIR__, 2) . '/');
 
 // Incluir o arquivo database.php
 require_once BASE_PATH . 'backend/db/database.php';

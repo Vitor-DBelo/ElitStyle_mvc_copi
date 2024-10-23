@@ -74,10 +74,9 @@
             <div class="order-summary">
                 <h2>Resumo do pedido</h2>
                 <div class="order-details">
-                    <p>Valor Total: <span class="striked">R$536,90</span></p>
-                    <p>Subtotal: <span>R$31,90</span></p>
+                    <p>Valor Total: <span id="valor-total">R$0,00</span></p>
                     <p>Entrega garantida: <span class="free">FREE</span></p>
-                    <p><strong>Total Geral:</strong> <span class="total">R$536,90</span></p>
+                    <p><strong>Total Geral:</strong> <span id="total-geral">R$0,00</span></p>
                 </div>
                 <button class="continue-btn" onclick="continuarPagamento()">CONTINUAR</button>
             </div>
@@ -152,45 +151,57 @@
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="../public/script/compra.js"></script>
     <script>
-            // Inicializar o SDK do Mercado Pago
-            const mp = new MercadoPago('TEST-4444444444444444');
+        // Função para carregar e exibir o total do carrinho
+        function carregarTotalCarrinho() {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            let total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+            
+            document.getElementById('valor-total').textContent = `R$${total.toFixed(2)}`;
+            document.getElementById('total-geral').textContent = `R$${total.toFixed(2)}`;
+        }
 
-            // Criar o campo de número do cartão
-            const cardNumberElement = mp.fields.create('cardNumber', {
-                placeholder: "Número do cartão"
-            }).mount('form-checkout__cardNumber');
+        // Chamar a função quando a página carregar
+        document.addEventListener('DOMContentLoaded', carregarTotalCarrinho);
 
-            // Criar o campo de data de expiração
-            const expirationDateElement = mp.fields.create('expirationDate', {
-                placeholder: "MM/YY"
-            }).mount('form-checkout__expirationDate');
+        // Inicializar o SDK do Mercado Pago
+        const mp = new MercadoPago('TEST-4444444444444444');
 
-            // Criar o campo de código de segurança
-            const securityCodeElement = mp.fields.create('securityCode', {
-                placeholder: "Código de segurança"
-            }).mount('form-checkout__securityCode');
+        // Criar o campo de número do cartão
+        const cardNumberElement = mp.fields.create('cardNumber', {
+            placeholder: "Número do cartão"
+        }).mount('form-checkout__cardNumber');
 
-            // Remover a classe 'placeholder' dos containers após a montagem dos campos
-            document.getElementById('form-checkout__cardNumber').classList.remove('placeholder');
-            document.getElementById('form-checkout__expirationDate').classList.remove('placeholder');
-            document.getElementById('form-checkout__securityCode').classList.remove('placeholder');
+        // Criar o campo de data de expiração
+        const expirationDateElement = mp.fields.create('expirationDate', {
+            placeholder: "MM/YY"
+        }).mount('form-checkout__expirationDate');
 
-            // Detectar a bandeira do cartão
-            cardNumberElement.on('binChange', (data) => {
-                const cardType = data.card_type;
-                if (cardType) {
-                    console.log('Bandeira do cartão:', cardType.name);
-                    // Aqui você pode atualizar a interface para mostrar a bandeira do cartão
-                }
-            });
+        // Criar o campo de código de segurança
+        const securityCodeElement = mp.fields.create('securityCode', {
+            placeholder: "Código de segurança"
+        }).mount('form-checkout__securityCode');
 
-            // Lidar com o envio do formulário
-            document.getElementById('form-checkout').addEventListener('submit', function(e) {
-                e.preventDefault();
-                // Aqui você pode adicionar a lógica para processar o pagamento
-                // Por exemplo, você pode fazer uma chamada AJAX para o seu backend
-                // para processar o pagamento usando as informações do cartão
-            });
+        // Remover a classe 'placeholder' dos containers após a montagem dos campos
+        document.getElementById('form-checkout__cardNumber').classList.remove('placeholder');
+        document.getElementById('form-checkout__expirationDate').classList.remove('placeholder');
+        document.getElementById('form-checkout__securityCode').classList.remove('placeholder');
+
+        // Detectar a bandeira do cartão
+        cardNumberElement.on('binChange', (data) => {
+            const cardType = data.card_type;
+            if (cardType) {
+                console.log('Bandeira do cartão:', cardType.name);
+                // Aqui você pode atualizar a interface para mostrar a bandeira do cartão
+            }
+        });
+
+        // Lidar com o envio do formulário
+        document.getElementById('form-checkout').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Aqui você pode adicionar a lógica para processar o pagamento
+            // Por exemplo, você pode fazer uma chamada AJAX para o seu backend
+            // para processar o pagamento usando as informações do cartão
+        });
       
     </script>
 </body>

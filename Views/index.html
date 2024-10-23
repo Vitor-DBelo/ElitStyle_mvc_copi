@@ -58,7 +58,7 @@
                     <div id="resumo-carrinho">
                         <h2>Resumo do Pedido</h2>
                         <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
-                        <a href="#" id="finalizar-compra">Finalizar Compra</a>
+                        <a href="compra.html" id="finalizar-compra">Finalizar Compra</a>
                     </div>
                 </div>
             </div>
@@ -88,7 +88,7 @@
        </div>
        <section class="grid_produtos_destaque">
             <div class="item">
-                <a href="produto.php?id=1"><img src="../public/img/produtos/calsa01.jpg" alt="Calça"></a>
+                <a href="produto.php?id=14"><img src="../public/img/produtos/calsa01.jpg" alt="Calça"></a>
                 <p><strong>ElittStritt</strong><br>Conjunto exclusivo de parceria, a calça Eleiitt combina conforto e estilo esportivo em um design luxuoso e único.</p>
             </div>
             <div class="item">
@@ -109,7 +109,7 @@
             </div>
             <div class="item">
                 <a href="produto.php?id=6"><img src="../public/img/produtos/imgl1.png" alt="Imagem 1"></a>
-                <p><strong>Supreme Streetwear Edition</strong><br>Suéter premium com logo "Streetwear".Minimalista,confortável e elegante.</p>
+                <p><strong>Supreme Streetwear Edition</strong><br>Suter premium com logo "Streetwear".Minimalista,confortável e elegante.</p>
             </div>
             <div class="item">
                 <a href="produto.php?id=7"><img src="../public/img/produtos/imgl2.png" alt="Imagem 2"></a>
@@ -202,101 +202,7 @@
          </section>
      </section>
      <script src="../public/script/app.js"></script>
-     <script>let carrinho = [];
-
-        // Função para simular a adição de itens ao carrinho
-        function simularAdicionarItens() {
-            const itensSimulados = [
-                { nome: "Camiseta", preco: 39.90, quantidade: 2, descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." },
-                { nome: "Calça Jeans", preco: 89.90, quantidade: 1, descricao: "Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." },
-                { nome: "Vestido", preco: 129.90, quantidade: 1, descricao: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur." },
-                { nome: "Jaqueta de Couro", preco: 199.90, quantidade: 1, descricao: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." },
-                { nome: "Saia Midi", preco: 79.90, quantidade: 3, descricao: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." }
-            ];
-        
-            itensSimulados.forEach(item => adicionarAoCarrinho(item.nome, item.preco, item.quantidade, item.descricao));
-        }
-        
-        function adicionarAoCarrinho(nome, preco, quantidade, descricao) {
-            carrinho.push({nome, preco, quantidade, descricao});
-            atualizarCarrinho();
-        }
-        
-        function atualizarQuantidade(index, delta) {
-            carrinho[index].quantidade += delta;
-            if (carrinho[index].quantidade <= 0) {
-                // Remove o item do carrinho se a quantidade for zero ou negativa
-                carrinho.splice(index, 1);
-            }
-            atualizarCarrinho();
-        }
-        
-        function atualizarCarrinho() {
-            let listaCarrinho = document.getElementById('itens-carrinho');
-            let resumoCarrinho = document.getElementById('resumo-carrinho');
-            
-            listaCarrinho.innerHTML = '';
-            let total = 0;
-        
-            carrinho.forEach((item, index) => {
-                let itemDiv = document.createElement('div');
-                itemDiv.className = 'item-carrinho';
-                itemDiv.innerHTML = `
-                    <div class="item-imagem"></div>
-                    <div class="item-detalhes">
-                        <div class="item-texto">
-                            <div class="item-nome">${item.nome}</div>
-                            <div class="item-descricao">${item.descricao}</div>
-                        </div>
-                        <div class="item-info-container">
-                            <div class="item-info-box">
-                                <span class="item-info-label">Quantidade</span>
-                                <div class="quantidade-controle">
-                                    <button onclick="atualizarQuantidade(${index}, -1)">-</button>
-                                    <span class="item-info-valor">${item.quantidade}</span>
-                                    <button onclick="atualizarQuantidade(${index}, 1)">+</button>
-                                </div>
-                            </div>
-                            <div class="item-info-box">
-                                <span class="item-info-label">Valor unitário</span>
-                                <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
-                            </div>
-                            <div class="item-info-box">
-                                <span class="item-info-label">Preço</span>
-                                <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
-                            </div>
-                        </div>
-                    </div>
-                `;
-                listaCarrinho.appendChild(itemDiv);
-                total += item.preco * item.quantidade;
-            });
-        
-            // Atualiza o resumo do carrinho
-            resumoCarrinho.innerHTML = `
-                <h2>Resumo do Pedido</h2>
-                <div class="total">
-                    <span>Total:</span>
-                    <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
-                </div>
-                <a href="#" id="finalizar-compra">Finalizar Compra</a>
-            `;
-        
-            // Adiciona evento de clique ao link
-            document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
-        }
-        
-        function finalizarCompra(event) {
-            event.preventDefault(); // Previne o comportamento padrão do link
-            alert('Redirecionando para a página de checkout...');
-            // Aqui você pode adicionar a lógica para redirecionar para a página de checkout
-            // Por exemplo: window.location.href = '/checkout';
-        }
-        
-        // Simular a adição de itens quando a página carregar
-        window.onload = simularAdicionarItens;</script>
      <script>
-     // Adicione este código no final do seu script
      document.addEventListener('DOMContentLoaded', function() {
          const carrinhoIcon = document.getElementById('carrinho-icon');
          const modal = document.getElementById('modal-carrinho');
@@ -306,6 +212,7 @@
              e.preventDefault();
              modal.style.display = 'block';
              document.body.style.overflow = 'hidden';
+             carregarCarrinho();
          });
 
          closeBtn.addEventListener('click', function() {
@@ -313,10 +220,119 @@
              document.body.style.overflow = '';
          });
 
-         // Removemos o evento de clique na janela para fechar o modal
+         function carregarCarrinho() {
+             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+             atualizarCarrinho(carrinho);
+         }
 
-         // Simular a adição de itens quando a página carregar
-         simularAdicionarItens();
+         function atualizarCarrinho(carrinho) {
+             let listaCarrinho = document.getElementById('itens-carrinho');
+             let resumoCarrinho = document.getElementById('resumo-carrinho');
+             
+             listaCarrinho.innerHTML = '';
+             let total = 0;
+
+             carrinho.forEach((item, index) => {
+                 let itemDiv = document.createElement('div');
+                 itemDiv.className = 'item-carrinho';
+                 itemDiv.innerHTML = `
+                     <div class="item-imagem">
+                         <img src="${item.imagemUrl || '../public/img/placeholder.png'}" alt="${item.nome}">
+                     </div>
+                     <div class="item-detalhes">
+                         <div class="item-texto">
+                             <div class="item-nome">${item.nome}</div>
+                             <div class="item-descricao">${item.descricao}</div>
+                         </div>
+                         <div class="item-info-container">
+                             <div class="item-info-box">
+                                 <span class="item-info-label">Quantidade</span>
+                                 <div class="quantidade-controle">
+                                     <button onclick="atualizarQuantidade(${index}, -1)">-</button>
+                                     <span class="item-info-valor">${item.quantidade}</span>
+                                     <button onclick="atualizarQuantidade(${index}, 1)">+</button>
+                                 </div>
+                             </div>
+                             <div class="item-info-box">
+                                 <span class="item-info-label">Valor unitário</span>
+                                 <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
+                             </div>
+                             <div class="item-info-box">
+                                 <span class="item-info-label">Preço</span>
+                                 <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                             </div>
+                         </div>
+                     </div>
+                 `;
+                 listaCarrinho.appendChild(itemDiv);
+                 total += item.preco * item.quantidade;
+             });
+
+             resumoCarrinho.innerHTML = `
+                 <h2>Resumo do Pedido</h2>
+                 <div class="total">
+                     <span>Total:</span>
+                     <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
+                 </div>
+                 <a href="compra.html" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+             `;
+
+             document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+         }
+
+         window.atualizarQuantidade = function(index, delta) {
+             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+             carrinho[index].quantidade += delta;
+             if (carrinho[index].quantidade <= 0) {
+                 carrinho.splice(index, 1);
+             }
+             localStorage.setItem('carrinho', JSON.stringify(carrinho));
+             atualizarCarrinho(carrinho);
+             atualizarIconeCarrinho();
+         }
+
+         function finalizarCompra(event) {
+             event.preventDefault();
+             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+             if (carrinho.length > 0) {
+                 window.location.href = 'compra.html';
+             } else {
+                 mostrarMensagemTemporaria('Seu carrinho está vazio. Adicione itens antes de finalizar a compra.');
+             }
+         }
+
+         function mostrarMensagemTemporaria(mensagem) {
+             const mensagemDiv = document.createElement('div');
+             mensagemDiv.textContent = mensagem;
+             mensagemDiv.style.cssText = `
+                 position: fixed;
+                 top: 20px;
+                 left: 50%;
+                 transform: translateX(-50%);
+                 background-color: #ff6b6b;
+                 color: white;
+                 padding: 10px 20px;
+                 border-radius: 5px;
+                 z-index: 1000;
+                 transition: opacity 0.5s ease-in-out;
+             `;
+             document.body.appendChild(mensagemDiv);
+
+             setTimeout(() => {
+                 mensagemDiv.style.opacity = '0';
+                 setTimeout(() => {
+                     document.body.removeChild(mensagemDiv);
+                 }, 500);
+             }, 3000);
+         }
+
+         function atualizarIconeCarrinho() {
+             const carrinhoIcon = document.querySelector('.nav-links a[href="#"]');
+             carrinhoIcon.textContent = '🛒';
+         }
+
+         // Atualizar o ícone do carrinho ao carregar a página
+         atualizarIconeCarrinho();
      });
      </script>
 </body>

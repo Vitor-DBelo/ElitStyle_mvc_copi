@@ -1,0 +1,51 @@
+<script>
+// ... (código anterior)
+
+function atualizarCarrinho(carrinho) {
+    let listaCarrinho = document.getElementById('itens-carrinho');
+    let resumoCarrinho = document.getElementById('resumo-carrinho');
+    
+    listaCarrinho.innerHTML = '';
+    let total = 0;
+
+    carrinho.forEach((item, index) => {
+        let itemDiv = document.createElement('div');
+        itemDiv.className = 'item-carrinho';
+        itemDiv.innerHTML = `
+            <div class="item-imagem">
+                <img src="${item.imagemUrl}" alt="${item.nome}">
+            </div>
+            <div class="item-detalhes">
+                <div class="item-texto">
+                    <div class="item-nome">${item.nome}</div>
+                    <div class="item-descricao">${item.descricao}</div>
+                </div>
+                <div class="item-info-container">
+                    <div class="item-info-box">
+                        <span class="item-info-label">Quantidade</span>
+                        <div class="quantidade-controle">
+                            <button onclick="atualizarQuantidade(${index}, -1)">-</button>
+                            <span class="item-info-valor">${item.quantidade}</span>
+                            <button onclick="atualizarQuantidade(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                    <div class="item-info-box">
+                        <span class="item-info-label">Valor unitário</span>
+                        <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
+                    </div>
+                    <div class="item-info-box">
+                        <span class="item-info-label">Preço</span>
+                        <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                    </div>
+                </div>
+            </div>
+        `;
+        listaCarrinho.appendChild(itemDiv);
+        total += item.preco * item.quantidade;
+    });
+
+    // ... (resto do código da função)
+}
+
+// ... (resto do código)
+</script>
