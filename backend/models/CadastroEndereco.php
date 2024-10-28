@@ -1,10 +1,19 @@
 <?php
 // Inclui a classe de conexão com o banco de dados
-require_once __DIR__ . '/db/database.php';
+require_once __DIR__ . '/../db/database.php';
 
 // Instancia a classe Database e obtém a conexão
 $database = new Database();
 $conn = $database->getConnection();
+
+// Inclui o arquivo de configuração do Mercado Pago
+$mercadoPagoConfigPath = __DIR__ . '/../mercadopago_config.php';
+
+if (!file_exists($mercadoPagoConfigPath)) {
+    die("Erro: O arquivo mercadopago_config.php não foi encontrado em: " . $mercadoPagoConfigPath);
+}
+
+require_once $mercadoPagoConfigPath;
 
 // Verifica se os dados foram enviados pelo formulário
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -33,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param("sssssssi", $numero, $rua, $bairro, $cep, $estado, $cidade, $infoAdicional, $id_user_db1);
 
             if ($stmt->execute()) {
-                header("Location: ../Views/login.html?message=endereco_atualizado");
+                header("Location: ../../Views/login.html?message=endereco_atualizado");
                 exit();
             } else {
                 throw new Exception("Erro ao atualizar o endereço: " . $stmt->error);
@@ -45,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt->bind_param("sssssssi", $numero, $rua, $bairro, $cep, $estado, $cidade, $infoAdicional, $id_user_db1);
 
             if ($stmt->execute()) {
-                header("Location: ../Views/login.html?message=endereco_cadastrado");
+                header("Location: ../../Views/login.html?message=endereco_cadastrado");
                 exit();
             } else {
                 throw new Exception("Erro ao cadastrar o endereço: " . $stmt->error);
@@ -58,5 +67,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
         $conn->close();
     }
+
+    // Cria um objeto de pagamento
+    try {
+        $payment = new MercadoPago\Payment();
+        $payment->transaction_amount = 100;
+        $payment->description = "Título do produto";
+        $payment->payment_method_id = "pix";
+        $payment->payer = array(
+            "email" => "test@test.com"
+        );
+
+        $payment->save();
+    } catch (Exception $e) {
+        echo "Erro ao criar o pagamento: " . $e->getMessage();
+    }
+
+    // Aqui você pode redirecionar o usuário ou mostrar informações do pagamento
 }
-?>

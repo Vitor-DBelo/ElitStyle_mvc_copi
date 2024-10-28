@@ -1,9 +1,12 @@
 <?php
-include_once 'backend/db/database.php';
+// Definir o diretório raiz do projeto
+// define('ROOT_DIR', dirname(__DIR__));
 
-require_once 'backend/controllers/ProdutoController.php';
-require_once 'backend/controllers/UsuarioController.php';
-require_once 'backend/controllers/FiltroController.php';
+include_once ROOT_DIR . '/backend/db/database.php';
+
+require_once ROOT_DIR . '/backend/controllers/ProdutoController.php';
+require_once ROOT_DIR . '/backend/controllers/UsuarioController.php';
+require_once ROOT_DIR . '/backend/controllers/FiltroController.php';
 
 $route = $_GET['route'] ?? '';
 
@@ -12,7 +15,26 @@ $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 switch ($route) {
     case '':
     case 'home':
-        require 'Views/index.php';
+        $indexPath = ROOT_DIR . '/Views/index.php';
+        if (file_exists($indexPath)) {
+            require $indexPath;
+        } else {
+            // Tente encontrar o arquivo index.php em outros diretórios comuns
+            $alternativePaths = [
+                ROOT_DIR . '/index.php',
+                ROOT_DIR . '/public/index.php',
+                ROOT_DIR . '/src/index.php'
+            ];
+            foreach ($alternativePaths as $path) {
+                if (file_exists($path)) {
+                    require $path;
+                    break;
+                }
+            }
+            if (!isset($path)) {
+                die("Arquivo index.php não encontrado. Verifique a estrutura do seu projeto.");
+            }
+        }
         break;
     
     case 'produto':

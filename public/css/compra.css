@@ -193,13 +193,6 @@ striked {
     background-color: #1e1e1e;
 }
 
-/* Estilos para os modais e formulário de cartão */
-body {
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-}
-
 .modal {
     display: none;
     position: fixed;
@@ -313,4 +306,42 @@ body {
     align-items: center;
     justify-content: flex-start;
     font-size: 16px;
+}
+@media only screen and (max-width: 2465px) {
+    .Nav_compra {
+        height: 70px;
+        font-size: 1.5vw; 
+    }
+    
+    .logo {
+        transform: scale(3);
+    }
+    
+    .content_payment {
+        flex-direction: row;
+    }
+
+    .option_payment {
+        width: 45%;
+    }
+
+    .payment-option {
+        width: 100%;
+        padding: 20px;
+    }
+    
+    .order-summary {
+        width: 45%;
+        font-size: 1.2em;
+    }
+
+    .continue-btn {
+        width: 500px;
+        font-size: 18px;
+        padding: 15px;
+    }
+
+    .modal-content {
+        max-width: 700px; /* Ajusta o tamanho do modal */
+    }
 }
