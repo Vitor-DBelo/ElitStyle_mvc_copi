@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once '../backend/controllers/BuscarEnderecoController.php';
+
+if (!isset($_SESSION['id_user'])) {
+    header("Location: login.html?message=nao_logado");
+    exit();
+}
+
+$endereco = buscarEndereco($_SESSION['id_user']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,8 +20,9 @@
     <link rel="stylesheet" href="../public/css/crudcadastro.css">
 </head>
 <body>
-    <form action="../backend/CadastroEndereco.php" method="POST">
+    <form id="enderecoForm" action="../backend/models/CadastroEndereco.php" method="POST">
         <h1>Formulário de Endereço</h1>
+        
         <label for="numero">Número:</label>
         <input type="text" id="numero" name="numero" required>
 
@@ -20,7 +33,8 @@
         <input type="text" id="bairro" name="bairro" required>
 
         <label for="cep">CEP:</label>
-        <input type="text" id="cep" name="cep" required pattern="\d{5}-\d{3}" placeholder="12345-678">
+        <input type="text" id="cep" name="cep" required pattern="\d{5}-\d{3}" 
+               placeholder="12345-678" >
 
         <label for="cidade">Cidade:</label>
         <input type="text" id="cidade" name="cidade" required>
@@ -31,18 +45,7 @@
         <label for="infoAdicional">Informações Adicionais:</label>
         <input type="text" id="infoAdicional" name="infoAdicional">
 
-        <input type="hidden" id="id_user" name="id_user" value="">
-
-        <input type="submit" value="Enviar">
+        <input type="submit">
     </form>
-
-    <script>
-        // Pegar o user_id da URL e colocar no campo hidden
-        const urlParams = new URLSearchParams(window.location.search);
-        const userId = urlParams.get('user_id');
-        if (userId) {
-            document.getElementById('id_user').value = userId;
-        }
-    </script>
 </body>
 </html>

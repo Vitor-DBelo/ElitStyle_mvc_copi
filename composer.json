@@ -1,0 +1,16 @@
+{
+    "name": "user/elitstyle_mvc_copi",
+    "description": "e-commerce de luxo",
+    "type": "porject",
+    "license": "mit",
+    "authors": [
+        {
+            "name": "Daniel",
+            "email": "vitordaniel2003g@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "mercadopago/dx-php": "^3.0"
+    }
+}

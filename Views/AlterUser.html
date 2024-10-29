@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../public/css/alteruser.css">
 </head>
 <body>
-    <form action="../backend/CadastroUsuario.php" method="POST">
+    <form action="../backend/models/AtualizaUser.php" method="POST">
         <h1>alterar dados de usuario</h1>
         
         <label for="email">E-mail:</label>
@@ -22,7 +22,7 @@
 
         <input type="hidden" id="data_criacao" name="data_criacao" value="<?php echo date('Y-m-d H:i:s'); ?>">
 
-        <input type="submit" value="Cadastrar">
+        <input type="submit" value="Atualizar">
     </form>
 </body>
 </html>

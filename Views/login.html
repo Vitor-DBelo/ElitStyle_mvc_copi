@@ -11,60 +11,13 @@
     <div class="container_login">
         <h2>Login</h2>
         <div class="login-form" id="loginForm">
-            <form onsubmit="return false;"> <!-- Impede o envio padrão do formulário -->
-                <input type="text" id="email" placeholder="E-mail" required>
-                <input type="password" id="password" placeholder="Senha" required>
-                <p>Não possuo conta:<samp><a href="termosDeUso.html">Cadastro</a></samp></p>
-                <button type="button" onclick="sendToken()">Entrar</button>
+            <form action="../backend/models/login.php" method="POST">
+                <input type="text" id="email" placeholder="E-mail" name="email" required>
+                <input type="password" id="password" placeholder="Senha" name="senha" required>
+                <p>Crie sua conta:<a href="cadastro.html">Cadastre-se</a></p>
+                <button type="submit">Entrar</button>
             </form>
         </div>
-        <div class="token-input" id="tokenInput">
-            <input type="text" id="token" placeholder="Código do Token" required>
-            <button class="of-button" onclick="validateToken()">Validar Token</button>
-        </div>
     </div>
-
-    <script>
-        function sendToken() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Verifica se os campos estão preenchidos
-            if (email === '' || password === '') {
-                alert('Por favor, preencha todos os campos.');
-                return; // Sai da função se algum campo estiver vazio
-            }
-
-            // Verificação simples de email e senha
-            const validEmail = "usuario@example.com"; // Exemplo de email válido
-            const validPassword = "senha123"; // Exemplo de senha válida
-
-            if (email === validEmail && password === validPassword) {
-                // Aqui você deve adicionar a lógica para verificar o login
-                // Se o login for bem-sucedido, exiba o campo do token
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('tokenInput').style.display = 'block';
-
-                // Aqui você pode implementar o envio do código para o e-mail
-                alert('Um código de token foi enviado para ' + email);
-            } else {
-                alert('E-mail ou senha inválidos. Tente novamente.');
-            }
-        }
-
-        function validateToken() {
-            const token = document.getElementById('token').value;
-
-            // Aqui você deve adicionar a lógica para validar o token
-            // Se o token estiver correto, redirecione para o site ou mostre uma mensagem de sucesso
-            if (token === '123456') { // Simulação de token correto
-                alert('Token validado com sucesso! Você pode navegar no site.');
-                // Aqui você pode redirecionar o usuário para a página principal
-                window.location.href = "pagina-principal.html"; // Altere para a página que deseja redirecionar
-            } else {
-                alert('Token inválido, tente novamente.');
-            }
-        }
-    </script>
 </body>
 </html>

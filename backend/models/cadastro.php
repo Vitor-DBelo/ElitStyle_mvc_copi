@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/db/database.php';
+require_once __DIR__ . '/../db/database.php';
 
 $database = new Database();
 $conn = $database->getConnection();
@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($stmt->execute()) {
             $user_id = $stmt->insert_id;
-            echo "Usuário cadastrado com sucesso! ID: " . $user_id;
             
-            // Redirecionar para a página de cadastro de endereço
-            header("Location: ../Views/CadastroEndereco.html?user_id=" . $user_id);
+            // Redirecionar para a página de cadastro de endereço usando caminho relativo
+            $redirect_url = "../../Views/CadastroEndereco.html?user_id=" . $user_id;
+            header("Location: " . $redirect_url);
             exit();
         } else {
             throw new Exception("Erro ao cadastrar usuário: " . $stmt->error);

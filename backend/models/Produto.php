@@ -16,17 +16,11 @@ class Produto {
 
     // Recupera todos os produtos
     public function getProdutos() {
+        // Implemente a lógica para obter todos os produtos
+        // Por exemplo:
         $query = "SELECT * FROM produto";
         $result = $this->conn->query($query);
-
-        $produtos = array();
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $produtos[] = $row;
-            }
-        }
-
-        return $produtos;
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
 
     // Recupera um produto específico por ID

@@ -13,7 +13,9 @@ CREATE TABLE user_db1 (
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(20),
-    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    imagem_perfil VARCHAR(255) NOT NULL,
+    data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status TINYINT(1) DEFAULT 1
 );
 
 -- Tabela endereco
@@ -29,7 +31,6 @@ CREATE TABLE endereco (
     id_user_db1 INT,
     FOREIGN KEY (id_user_db1) REFERENCES user_db1(id_user) ON DELETE CASCADE
 );
-
 -- Tabela produto
 CREATE TABLE produto (
     id_produto INT AUTO_INCREMENT PRIMARY KEY,
@@ -131,3 +132,4 @@ select * from user_db1 ;
 select * from endereco ;
 -- Remover o banco de dados, caso necessário
 DROP DATABASE elitstyle;
+
