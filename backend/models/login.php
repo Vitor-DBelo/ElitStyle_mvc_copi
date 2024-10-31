@@ -1,27 +1,47 @@
 <?php
-require_once __DIR__ . '/../db/database.php';
 session_start();
+require_once __DIR__ . '/../db/database.php';
+require_once __DIR__ . '/IncludeEmail.php';
+// Adicionar estas linhas para importar o PHPMailer
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
-// Configurações seguras de sessão
-ini_set('session.cookie_httponly', 1); // Impede o acesso ao cookie de sessão via JavaScript
-ini_set('session.cookie_secure', 1);   // Garante que o cookie de sessão seja transmitido apenas via HTTPS
-ini_set('session.use_only_cookies', 1); // Utiliza apenas cookies para armazenar o ID da sessão
+// Verificar se você tem o autoload do Composer
+require_once __DIR__ . '/../../vendor/autoload.php';
 
+$mail = new PHPMailer(true);
+
+try {
+    // Configurações do servidor SMTP
+    $mail->isSMTP();                                          
+    $mail->Host       = SMTP_HOST;                    
+    $mail->SMTPAuth   = true;                                   
+    $mail->Username   = SMTP_USER;               
+    $mail->Password   = SMTP_PASS;                         
+    $mail->Port       = SMTP_PORT;                                    
+
+    // Recipientes 
+    $mail->setFrom('elitstyle404@gmail.com', 'Elite Style');
+    $mail->addAddress('humamaigohan@gmail.com', 'humamaigohan');     
+    
+    // Conteúdo
+    $mail->isHTML(true);                                  
+    $mail->Subject = 'Codigo de verificação';
+    $mail->Body    = 'Este é o codigo de verificação: <b>123456</b>';
+    $mail->AltBody = 'Este é o codigo de verificação: cusao';
+
+    $mail->send();
+    echo 'Email enviado com sucesso';
+} catch (Exception $e) {
+    echo "Erro ao enviar email: {$mail->ErrorInfo}";
+}
 
 
 // Criar instância da classe Database
 $database = new Database();
 $conn = $database->getConnection();
 
-// Função para gerar token de 8 números aleatórios de 0 a 9
-function gerarTokenNumerico() {
-    $token = '';
-    for ($i = 0; $i < 8; $i++) {
-        $token .= mt_rand(0, 9);
-    }
-    return $token;
-}
-$token = gerarTokenNumerico();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
@@ -44,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if($result->num_rows > 0){
         $row = $result->fetch_assoc();
-        $senha_hash = $row['senha'];
+        
         
         if(password_verify($password, $senha_hash)){
             $_SESSION['id_user'] = $row['id_user'];
@@ -61,4 +81,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $conn->close();
-?>
+

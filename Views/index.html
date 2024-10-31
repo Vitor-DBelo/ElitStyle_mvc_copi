@@ -61,8 +61,9 @@
                     <div id="resumo-carrinho">
                         <h2>Resumo do Pedido</h2>
                         <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
-                        <form action=""></form>
-                        <a href="compra.html" id="finalizar-compra">Finalizar Compra</a>
+                        <form action="../backend/controllers/VerificaCompra.php" method="POST">
+                            <button type="submit" id="finalizar-compra">Finalizar Compra</button>
+                        </form>
                     </div>
                 </div>
             </div>

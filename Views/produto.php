@@ -136,7 +136,7 @@ if (!function_exists('base_url')) {
                 <h2>Preço</h2>
                 <h3><span>R$ </span><?php echo number_format($produto['preco'], 2, ',', '.'); ?></h3>
                 <div class="button-submit">
-                    <button type="submit">Comprar</button>
+                    <a href="compra.html"><button type="submit">Comprar</button></a>
                     <button type="button" id="adicionar-ao-carrinho" 
                         data-id="<?php echo $produto['id_produto']; ?>" 
                         data-nome="<?php echo htmlspecialchars($produto['nome']); ?>" 
