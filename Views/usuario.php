@@ -120,7 +120,7 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
                     <?php else: ?>
                         <p>Nenhum endereço cadastrado.</p>
                     <?php endif; ?>
-                    <a href="CadastroEndereco.html"><button class="button" id="canto">Editar</button></a>
+                    <a href="EditarEndereco.html"><button class="button" id="canto">Editar</button></a>
                 </div>
         
                 <div id="historico" class="content-section">

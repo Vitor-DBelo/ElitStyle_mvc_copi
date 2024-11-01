@@ -1,10 +1,11 @@
 <?php
-session_start();
-
-// Verifica se a sessão está estabelecida
-if (!isset($_SESSION['id'])) {
-    // Se não estiver logado, redireciona para a página de login
-    header("Location: ../frontend/index.html");
-    exit();
+class AuthController {
+    public static function verificarAutenticacao() {
+        session_start();
+        if (!isset($_SESSION['authenticated']) || $_SESSION['authenticated'] !== true) {
+            header("Location: ../../Views/login.html");
+            exit();
+        }
+    }
 }
 ?>

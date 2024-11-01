@@ -13,18 +13,55 @@
     <h2>Insira o código de verificação</h2>
     
     <div class="code-inputs">
-    <form action="../backend/models/login.php" method="POST">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
-        <input type="text" maxlength="1">
+    <form action="../backend/models/VerificarToken.php" method="POST" id="tokenForm">
+        <input type="text" maxlength="1" name="code[]">
+        <input type="text" maxlength="1" name="code[]">
+        <input type="text" maxlength="1" name="code[]">
+        <input type="text" maxlength="1" name="code[]">
+        <input type="text" maxlength="1" name="code[]">
+        <input type="text" maxlength="1" name="code[]">
+        <button type="submit" class="btn-submit" style="margin-top: 20px;">Continuar</button>
     </form>
     </div>
-    
-    <button class="btn-submit">Continuar</button>
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('input[type="text"]');
+    const form = document.getElementById('tokenForm');
+    
+    inputs.forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (this.value.length === 1) {
+                // Se houver próximo input, foca nele
+                if (inputs[index + 1]) {
+                    inputs[index + 1].focus();
+                }
+            }
+        });
+
+        // Permite usar backspace para voltar ao input anterior
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value) {
+                if (inputs[index - 1]) {
+                    inputs[index - 1].focus();
+                }
+            }
+        });
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const token = Array.from(inputs).map(input => input.value).join('');
+        const hiddenInput = document.createElement('input');
+        hiddenInput.type = 'hidden';
+        hiddenInput.name = 'token';
+        hiddenInput.value = token;
+        form.appendChild(hiddenInput);
+        form.submit();
+    });
+});
+</script>
 
 </body>
 </html>

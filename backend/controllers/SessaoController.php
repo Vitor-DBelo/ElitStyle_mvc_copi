@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db/database.php';
+require '../db/database.php';
 
 // Verifica se a sessão expirou
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 7200)) {
