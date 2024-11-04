@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if(enviarEmailVerificacao($token, $email)){
                 $_SESSION['verification_email'] = $email; // Armazenar email na sessão
                 $_SESSION['verification_token'] = $token; // Armazenar token na sessão
-                header("Location: ../../Views/token.html");
+                header("Location: ../../Views/index.html");
                 exit();
             } else {
                 $_SESSION['error_message'] = "Erro ao enviar e-mail de verificação";
