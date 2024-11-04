@@ -1,45 +1,53 @@
 <?php
 session_start();
-require '../db/database.php';
+require_once __DIR__ . '/../db/database.php';
+
+// Cria uma instância da classe Database e obtém a conexão
+$database = new Database();
+$conn = $database->getConnection();
 
 // Verifica se a sessão expirou
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 7200)) {
-    // Sessão expirou após 2 horas de inatividade
-    session_unset();     // Limpa todas as variáveis de sessão
-    session_destroy();   // Destrói a sessão
+    session_unset();
+    session_destroy();
     header("Location: ../../Views/login.html?message=sessao_expirada");
     exit();
 }
 
-// Atualiza o timestamp da última atividade
 $_SESSION['LAST_ACTIVITY'] = time();
 
-// Exemplo de dados recebidos do formulário de login
-$nome = $_POST['nome'];
-$senha = $_POST['senha'];
+// Verifica se o formulário foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nome = $_POST['nome'] ?? ''; // Evita erro se não estiver definido
+    $senha = $_POST['senha'] ?? ''; // Evita erro se não estiver definido
 
-// Consulta para verificar as credenciais
-$query = "SELECT id, senha FROM user_db WHERE nome = ?";
-$stmt = $conn->prepare($query);
-$stmt->bind_param("s", $nome);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+    // Consulta para verificar as credenciais
+    $query = "SELECT id_user, senha FROM user_db1 WHERE nome = ?"; // Corrigido aqui
+    $stmt = $conn->prepare($query);
+    if ($stmt === false) {
+        die('Erro na preparação da consulta: ' . htmlspecialchars($conn->error));
+    }
+    
+    $stmt->bind_param("s", $nome);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $user = $result->fetch_assoc();
 
-if ($user && password_verify($senha, $user['senha'])) {
-    // Login válido: inicia a sessão e cria o hash
-    $_SESSION['user_id'] = $user['id'];
+    if ($user && password_verify($senha, $user['senha'])) {
+        $_SESSION['user_id'] = $user['id_user']; // Corrigido aqui
+        $salt = "chave_secreta_unica";
+        $_SESSION['user_hash'] = hash('sha256', $user['id_user'] . $salt); // Corrigido aqui
+        $_SESSION['CREATED'] = time();
 
-    // Cria um hash de sessão único
-    $salt = "chave_secreta_unica"; // Defina uma chave secreta única
-    $_SESSION['user_hash'] = hash('sha256', $user['id'] . $salt);
+        echo "Login bem-sucedido!"; // Redirecionamento ou mensagem
+    } else {
+        echo "Usuário ou senha incorretos.";
+    }
 
-    // Define o tempo de início da sessão
-    $_SESSION['CREATED'] = time();
-
-    echo "Login bem-sucedido!"; // Redirecionamento ou mensagem
+    $stmt->close(); // Fecha o statement
 } else {
-    echo "Usuário ou senha incorretos.";
+    echo "Por favor, preencha o formulário de login.";
+    exit();
 }
 
 // Função para verificar a validade da sessão
@@ -48,14 +56,13 @@ function verificarSessao() {
         return false;
     }
 
-    $salt = "chave_secreta_unica"; // A mesma chave secreta usada na criação
+    $salt = "chave_secreta_unica";
     $hash_esperado = hash('sha256', $_SESSION['user_id'] . $salt);
 
     if ($_SESSION['user_hash'] !== $hash_esperado) {
         return false;
     }
 
-    // Verifica se passaram 2 horas desde a criação da sessão
     if (isset($_SESSION['CREATED']) && (time() - $_SESSION['CREATED'] > 7200)) {
         session_unset();
         session_destroy();
@@ -67,7 +74,7 @@ function verificarSessao() {
 
 // Exemplo de uso da função de verificação
 if (!verificarSessao()) {
-    header("Location: ../../Views/login.html?message=sessao_invalida");
+    header("Location: ../../Views/index.html?message=sessao_invalida");
     exit();
 }
 ?>

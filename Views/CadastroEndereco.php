@@ -1,3 +1,18 @@
+<?php
+session_start();
+require_once '../backend/controllers/BuscarEnderecoController.php';
+
+// Debug
+var_dump($_SESSION);
+
+if (!isset($_SESSION['id_user'])) {
+    header("Location: login.html?message=nao_logado");
+    exit();
+}
+
+$endereco = buscarEndereco($_SESSION['id_user']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -8,8 +23,13 @@
     <link rel="stylesheet" href="../public/css/crudcadastro.css">
 </head>
 <body>
-    <form id="enderecoForm" action="../backend/models/EditarEndereco.php" method="POST">
-        <h1>Alterar Endereço</h1>
+    <!-- Debug -->
+    <div style="display:none;">
+        <?php echo "ID do usuário na sessão: " . $_SESSION['id_user']; ?>
+    </div>
+
+    <form id="enderecoForm" action="../backend/models/CadastroEndereco.php" method="POST">
+        <h1>Formulário de Endereço</h1>
         
         <label for="numero">Número:</label>
         <input type="text" id="numero" name="numero" required>
@@ -30,9 +50,7 @@
         <label for="estado">Estado:</label>
         <input type="text" id="estado" name="estado" required>
 
-      
-
-        <input type="submit" value="Atualizar Endereço">
+        <input type="submit" value="Cadastrar Endereço">
     </form>
 </body>
-</html>
+</html> 

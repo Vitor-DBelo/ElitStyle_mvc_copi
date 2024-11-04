@@ -14,10 +14,18 @@
             <form action="../backend/models/login.php" method="POST">
                 <input type="text" id="email" placeholder="E-mail" name="email" required>
                 <input type="password" id="password" placeholder="Senha" name="senha" required>
-                <p>Crie sua conta:<a href="cadastro.html">Cadastre-se</a></p>
+                <p>Crie sua conta:<a href="termosDeUso.html">Cadastre-se</a></p>
                 <button type="submit">Entrar</button>
             </form>
         </div>
     </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Salva a página anterior no sessionStorage
+        if (document.referrer) {
+            sessionStorage.setItem('previousPage', document.referrer);
+        }
+    });
+    </script>
 </body>
 </html>

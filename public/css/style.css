@@ -226,7 +226,7 @@ main {
     justify-content: left;
     width: 100%;
     padding: 0;
-    margin-left: 293px;
+    margin-left: 193px;
 
 }
 
@@ -656,7 +656,7 @@ main-produto {
         width: 50%;
     }
     .title_grid{
-        margin-left: 95px;
+        margin-left: 35px;
     }
     .grid_produtos_destaque {
         display: grid;
@@ -760,4 +760,18 @@ main-produto {
     .Sec-carousel {
         display: none;
     }
+}
+
+.button-delete {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-delete:hover {
+    background-color: #cc0000;
 }

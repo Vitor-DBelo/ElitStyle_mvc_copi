@@ -9,8 +9,8 @@ if (!$userData) {
     exit();
 }
 
-// Definir caminho padrão da imagem caso não exista
-$imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_perfil'] : "../public/img/usuario.png";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,6 +21,8 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
     <link rel="shortcut icon" href="../public/img/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="../public/css/animation.css">
+    <link rel="stylesheet" href="../public/css/modal.css">
+    
 </head>
 <body>
     <header> 
@@ -51,7 +53,7 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
                 <li><a href="index.html">Acessórios</a></li>
                 <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
-                    <img src="../public/img/gato.jpg" alt="Foto do usuário">
+                    <img src="<?php echo $imagemPerfil; ?>" alt="Foto do usuário">
                     <div class="dropdown-menu">
                         <ul>
                             <li><a href="#">Editar</a></li>
@@ -74,9 +76,12 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
                     </form>
                 </div>
             </div>
-                
-                <a href="AlterUser.html"><button class="button" style="margin-top: 390px;">Alterar</button></a>
-                <button class="button" style="margin-top: 390px;">Excluir</button>
+                <div class="user-actions" style="margin-top: 390px; display: flex; gap: 20px; justify-content: left;">
+                    <a href="AlterUser.html"><button class="button">Alterar</button></a>
+                    <form action="../backend/controllers/DeletUser.php" method="POST">
+                        <button type="submit" class="button">Deletar Conta</button>
+                    </form>
+                </div>
             </div>
         </aside>
         
@@ -113,10 +118,6 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
                             <p>Estado:</p>
                             <p class="informacao_endereco"><?php echo htmlspecialchars($userAddress['estado']); ?></p>
                         </div>
-                        <div class="input-group">
-                            <p>Informações Adicionais:</p>
-                            <p class="informacao_endereco"><?php echo htmlspecialchars($userAddress['informacoes_adicionais']); ?></p>
-                        </div>
                     <?php else: ?>
                         <p>Nenhum endereço cadastrado.</p>
                     <?php endif; ?>
@@ -129,6 +130,7 @@ $imagemPerfil = !empty($userData['imagem_perfil']) ? "../" . $userData['imagem_p
             </div>
         </section>        
     </main>
+    <script src="../public/script/compra.js"></script>
     <script>
         // Seleciona os botões e as seções
 const enderecoBtn = document.getElementById('enderecoBtn');

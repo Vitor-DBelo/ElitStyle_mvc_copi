@@ -74,8 +74,12 @@
             <div class="order-summary">
                 <h2>Resumo do pedido</h2>
                 <div class="order-details">
-                    <p>Valor Total: <span id="valor-total">R$0,00</span></p>
-                    <p>Entrega garantida: <span class="free">FREE</span></p>
+                    <!-- Lista de produtos -->
+                    <div id="produtos-lista">
+                        <!-- Os produtos serão inseridos aqui dinamicamente -->
+                    </div>
+                    <hr>
+                    <p>Entrega garantida: <span class="free">GRÁTIS</span></p>
                     <p><strong>Total Geral:</strong> <span id="total-geral">R$0,00</span></p>
                 </div>
                 <button class="continue-btn" onclick="continuarPagamento()">CONTINUAR</button>
@@ -151,17 +155,55 @@
     <script src="https://sdk.mercadopago.com/js/v2"></script>
     <script src="../public/script/compra.js"></script>
     <script>
-        // Função para carregar e exibir o total do carrinho
-        function carregarTotalCarrinho() {
-            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
-            let total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+        function carregarTotal() {
+            const origem = new URLSearchParams(window.location.search).get('origem');
+            const compraProdutoUnico = JSON.parse(localStorage.getItem('compraProdutoUnico'));
+            const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+            const listaProdutos = document.getElementById('produtos-lista');
             
-            document.getElementById('valor-total').textContent = `R$${total.toFixed(2)}`;
-            document.getElementById('total-geral').textContent = `R$${total.toFixed(2)}`;
+            // Limpa a lista de produtos
+            listaProdutos.innerHTML = '';
+            
+            if (origem === 'carrinho') {
+                // Adiciona cada item do carrinho à lista
+                carrinho.forEach(item => {
+                    listaProdutos.innerHTML += `
+                        <div class="produto-item">
+                            <p>${item.nome} (${item.quantidade}x) <span class="preco">R$${(item.preco * item.quantidade).toFixed(2)}</span></p>
+                        </div>
+                    `;
+                });
+                const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                document.getElementById('total-geral').textContent = `R$${total.toFixed(2)}`;
+            }
+            else if (compraProdutoUnico && compraProdutoUnico.tipo === 'produto_unico') {
+                // Adiciona o produto único à lista
+                listaProdutos.innerHTML = `
+                    <div class="produto-item">
+                        <p>${compraProdutoUnico.nome} (1x) <span class="preco">R$${compraProdutoUnico.preco.toFixed(2)}</span></p>
+                    </div>
+                `;
+                document.getElementById('total-geral').textContent = `R$${compraProdutoUnico.preco.toFixed(2)}`;
+            }
+            else if (carrinho.length > 0) {
+                // Caso similar ao primeiro caso
+                carrinho.forEach(item => {
+                    listaProdutos.innerHTML += `
+                        <div class="produto-item">
+                            <p>${item.nome} (${item.quantidade}x) <span class="preco">R$${(item.preco * item.quantidade).toFixed(2)}</span></p>
+                        </div>
+                    `;
+                });
+                const total = carrinho.reduce((acc, item) => acc + (item.preco * item.quantidade), 0);
+                document.getElementById('total-geral').textContent = `R$${total.toFixed(2)}`;
+            }
+            else {
+                window.location.href = 'index.html';
+            }
         }
 
         // Chamar a função quando a página carregar
-        document.addEventListener('DOMContentLoaded', carregarTotalCarrinho);
+        document.addEventListener('DOMContentLoaded', carregarTotal);
 
         // Inicializar o SDK do Mercado Pago
         const mp = new MercadoPago('TEST-4444444444444444');

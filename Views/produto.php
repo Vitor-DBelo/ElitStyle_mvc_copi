@@ -80,9 +80,9 @@ if (!function_exists('base_url')) {
                 <img src="../public/img/icon/icon_hamburger.png" alt="Menu"> 
             </div>
             <ul class="nav-links">
-                <li><a href="#lançamentos">Lançamentos</a></li>
-                <li><a href="#marcas">Marcas</a></li>
-                <li><a href="#acessorios">Acessórios</a></li>
+                <li><a href="index.html">Lançamentos</a></li>
+                <li><a href="index.html">Marcas</a></li>
+                <li><a href="index.html">Acessórios</a></li>
                 <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
                     <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
@@ -108,7 +108,7 @@ if (!function_exists('base_url')) {
                     <div id="resumo-carrinho">
                         <h2>Resumo do Pedido</h2>
                         <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
-                        <a href="compra.html" id="finalizar-compra">Finalizar Compra</a>
+                        <a href="compra.html?origem=carrinho" id="finalizar-compra">Finalizar Compra</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +136,7 @@ if (!function_exists('base_url')) {
                 <h2>Preço</h2>
                 <h3><span>R$ </span><?php echo number_format($produto['preco'], 2, ',', '.'); ?></h3>
                 <div class="button-submit">
-                    <a href="compra.html"><button type="submit">Comprar</button></a>
+                    <button type="button" onclick="comprarProduto(<?php echo $produto['preco']; ?>, '<?php echo htmlspecialchars($produto['nome']); ?>')">Comprar</button>
                     <button type="button" id="adicionar-ao-carrinho" 
                         data-id="<?php echo $produto['id_produto']; ?>" 
                         data-nome="<?php echo htmlspecialchars($produto['nome']); ?>" 
@@ -276,7 +276,7 @@ if (!function_exists('base_url')) {
                     <span>Total:</span>
                     <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
                 </div>
-                <a href="compra.html" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
             `;
 
             document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
@@ -297,7 +297,7 @@ if (!function_exists('base_url')) {
             event.preventDefault();
             let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
             if (carrinho.length > 0) {
-                window.location.href = 'compra.html';
+                window.location.href = 'compra.html?origem=carrinho';
             } else {
                 mostrarMensagemTemporaria('Seu carrinho está vazio. Adicione itens antes de finalizar a compra.');
             }
@@ -354,6 +354,16 @@ if (!function_exists('base_url')) {
         // Atualizar o ícone do carrinho ao carregar a página
         atualizarIconeCarrinho();
     });
+    </script>
+    <script>
+    function comprarProduto(preco, nome) {
+        localStorage.setItem('compraProdutoUnico', JSON.stringify({
+            preco: preco,
+            nome: nome,
+            tipo: 'produto_unico'
+        }));
+        window.location.href = 'compra.html?origem=produto_unico';
+    }
     </script>
 </body>
 </html>

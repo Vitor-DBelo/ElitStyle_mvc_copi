@@ -1,0 +1,175 @@
+Array
+(
+    [numero] => 2
+    [rua] => 2
+    [bairro] => 2
+    [cep] => 32675-812
+    [cidade] => 2
+    [estado] => 2
+    [infoAdicional] => casa do caria
+)
+Informações Adicionais: 
+Query: UPDATE endereco SET 
+            numero = ?, 
+            rua = ?, 
+            bairro = ?, 
+            cep = ?, 
+            estado = ?, 
+            cidade = ?, 
+            informacoes_adicionais = ? 
+            WHERE id_user_db1 = ?
+Parâmetros: 2, 2, 2, 32675-812, 2, 2, , 1
+Query executada com sucesso
+Array
+(
+    [numero] => 3
+    [rua] => 3
+    [bairro] => 3
+    [cep] => 32675-812
+    [cidade] => 3
+    [estado] => 3
+    [infoAdicional] => calor do carai
+)
+Informações Adicionais: 
+Query: UPDATE endereco SET 
+            numero = ?, 
+            rua = ?, 
+            bairro = ?, 
+            cep = ?, 
+            estado = ?, 
+            cidade = ?, 
+            informacoes_adicionais = ? 
+            WHERE id_user_db1 = ?
+Parâmetros: 3, 3, 3, 32675-812, 3, 3, , 1
+Query executada com sucesso
+Array
+(
+    [numero] => 3
+    [rua] => 3
+    [bairro] => 3
+    [cep] => 32675-812
+    [cidade] => 3
+    [estado] => 3
+    [infoAdicional] => o cusasss
+)
+Informações Adicionais: 
+Query: UPDATE endereco SET 
+            numero = ?, 
+            rua = ?, 
+            bairro = ?, 
+            cep = ?, 
+            estado = ?, 
+            cidade = ?, 
+            informacoes_adicionais = ? 
+            WHERE id_user_db1 = ?
+Parâmetros: 3, 3, 3, 32675-812, 3, 3, , 1
+Query executada com sucesso
+POST DATA:
+Array
+(
+    [numero] => 3
+    [rua] => 3
+    [bairro] => 3
+    [cep] => 23415-312
+    [cidade] => 3
+    [estado] => 3
+    [infoAdicional] => 3
+)
+
+Valor de informacoes_adicionais: []
+Query teste: UPDATE endereco SET informacoes_adicionais = '' WHERE id_user_db1 = 1
+Update teste bem sucedido
+Query executada com sucesso
+Valor após atualização: Array
+(
+    [informacoes_adicionais] => 
+)
+
+=== NOVA REQUISIÇÃO ===
+POST DATA:
+Array
+(
+    [numero] => 3
+    [rua] => 3
+    [bairro] => 3
+    [cep] => 32675-812
+    [cidade] => 3
+    [estado] => 3
+    [infoAdicional] => 3
+)
+
+ID do usuário: 1
+Informações Adicionais recebidas: []
+Update executado com sucesso
+Valor após atualização: Array
+(
+    [informacoes_adicionais] => 
+)
+
+=== FIM DA REQUISIÇÃO ===
+
+=== NOVA REQUISIÇÃO ===
+POST DATA:
+Array
+(
+    [numero] => 2
+    [rua] => 2
+    [bairro] => 2
+    [cep] => 23415-312
+    [cidade] => 2
+    [estado] => 2
+    [infoAdicional] => 2
+)
+
+ID do usuário: 1
+Dados recebidos:
+Número: [2]
+Rua: [2]
+Bairro: [2]
+CEP: [23415-312]
+Estado: [2]
+Cidade: [2]
+Informações Adicionais: []
+Update executado com sucesso
+Dados após atualização:
+Array
+(
+    [id_endereco] => 1
+    [numero] => 2
+    [rua] => 2
+    [bairro] => 2
+    [cep] => 23415-312
+    [estado] => 2
+    [cidade] => 2
+    [informacoes_adicionais] => 
+    [id_user_db1] => 1
+)
+
+=== FIM DA REQUISIÇÃO ===
+
+[2024-11-03 04:22:06] Iniciando processamento do formulário
+[2024-11-03 04:22:06] POST data: Array
+(
+    [numero] => 312
+    [rua] => cleiton
+    [bairro] => 3
+    [cep] => 23415-312
+    [cidade] =>  pau
+    [estado] => joa
+    [infoAdicional] => 3
+)
+
+[2024-11-03 04:22:06] ID do usuário: 1
+[2024-11-03 04:22:06] Informações Adicionais recebidas: ''
+[2024-11-03 04:22:06] Atualizando endereço existente
+[2024-11-03 04:22:06] Valor atual no banco: Array
+(
+    [informacoes_adicionais] => 
+)
+
+[2024-11-03 04:22:06] Operação concluída com sucesso
+[2024-11-03 04:22:06] Dados salvos no banco: Array
+(
+    [informacoes_adicionais] => 
+)
+

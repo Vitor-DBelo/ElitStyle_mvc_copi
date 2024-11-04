@@ -13,10 +13,12 @@ CREATE TABLE user_db1 (
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(255) NOT NULL,
     telefone VARCHAR(20),
-    imagem_perfil VARCHAR(255) NOT NULL,
+    imagem_perfil VARCHAR(255) DEFAULT '../public/img/perfil/gato.jpg',
     data_criacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    status TINYINT(1) DEFAULT 1
+    status TINYINT(1) DEFAULT 1,
+    data_atualizacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+
 
 -- Tabela endereco
 CREATE TABLE endereco (
@@ -27,10 +29,10 @@ CREATE TABLE endereco (
     cep VARCHAR(20) NOT NULL,
     estado VARCHAR(50) NOT NULL,
     cidade VARCHAR(100) NOT NULL,
-    informacoes_adicionais VARCHAR(255),
     id_user_db1 INT,
     FOREIGN KEY (id_user_db1) REFERENCES user_db1(id_user) ON DELETE CASCADE
 );
+
 -- Tabela produto
 CREATE TABLE produto (
     id_produto INT AUTO_INCREMENT PRIMARY KEY,
@@ -128,8 +130,12 @@ INSERT INTO categoria (nome_categoria, id_produto) VALUES
 UPDATE produto SET url = REPLACE(url, '../public/', '/');
 
 select * from user_db1 ;
+select * from produto;
 
 select * from endereco ;
--- Remover o banco de dados, caso necessário
-DROP DATABASE elitstyle;
+describe endereco;
+ALTER TABLE endereco MODIFY COLUMN informacoes_adicionais TEXT;
 
+
+-- Remover o banco de dados, caso necessário
+DROP DATABASE elitstyle
