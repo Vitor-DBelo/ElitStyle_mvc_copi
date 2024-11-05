@@ -189,7 +189,9 @@ main {
     justify-content: center;
 
 }
-
+.icon_hamburger{
+    display: none;
+}
 .img-container {
     display: flex;
 }
@@ -459,6 +461,26 @@ main-produto {
     height: 100vh;
     margin-top: 90px;
     display: flex;
+    padding: 0 20px;
+    gap: 30px;
+}
+
+.container_esquerda_esq {
+    width: 30%;
+    min-width: 300px;
+}
+
+.container_direita_dir {
+    width: 70%;
+    max-width: 800px;
+}
+
+.container_direita {
+    width: 100%;
+    height: auto;
+    background-color: #1E1E1E;
+    font-size: 20px;
+    border-radius: 5px;
 }
 
 .img-user {
@@ -671,20 +693,136 @@ main-produto {
 
 }
 
-@media screen and (max-width: 460px) {
+.button-delete {
+    background-color: #ff4444;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button-delete:hover {
+    background-color: #cc0000;
+}
+
+@media screen and (max-width: 1536px) {
+    .content-user {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 15px;
+        gap: 20px;
+        width: 100%;
+    }
+    .title_grid{
+        margin-left: 90px;
+    }
+    .container_esquerda_esq {
+        width: 50%;
+        padding-right: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .container_direita_dir {
+        width: 50%;
+        padding-left: 15px;
+    }
+
+    .container_direita {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .profile-user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        padding-bottom: 60px;
+    }
+
+    .img-user {
+        width: 150px;
+        height: 150px;
+    }
+
+    .user-name {
+        font-size: 18px;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .custom-button {
+        padding: 8px 14px;
+        font-size: 14px;
+        width: 80%;
+        margin: 10px auto;
+    }
+
+    .user-actions {
+        margin-top: 60px !important;
+        justify-content: left;
+        width: 100%;
+        display: flex;
+        gap: 30px;
+    }
+
+    .button {
+        width: 120px;
+    }
+
+    .content-section-endereco {
+        padding: 20px;
+    }
+
+    .input-group {
+        margin: 15px 0;
+    }
+
+    #canto {
+        margin-left: auto;
+        margin-right: 20px;
+        width: 120px;
+    }
+
+    /* Ajustes para o mini-menu */
+    .mini-menu {
+        display: flex;
+        justify-content: flex-start;
+        padding: 10px 20px;
+    }
+
+    .mini-menu button {
+        padding: 10px 20px;
+    }
+
+    .file-upload {
+        margin-bottom: 60px;
+    }
+}
+
+/* Media query para mobile */
+@media screen and (min-width: 100px) and (max-width: 600px) {
     .content {
         width: 100%;
         flex-direction: column;
         display: block;
         margin: 0;
+        margin-top: 69px;
     }
-
+    .icon_hamburger{
+        display: flex;
+    }
     .content img {
         width: 187px;
         height: auto;
         margin: 0;
     }
-
+    
     .img-container {
         display: flex;
         justify-content: center;
@@ -760,18 +898,163 @@ main-produto {
     .Sec-carousel {
         display: none;
     }
-}
+    .content-user {
+        flex-direction: column;
+        padding: 0 10px;
+        margin-top: 70px;
+        gap: 20px;
+    }
 
-.button-delete {
-    background-color: #ff4444;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
+    .container_esquerda_esq {
+        width: 100%;
+        margin-left: 0;
+        min-width: auto;
+    }
 
-.button-delete:hover {
-    background-color: #cc0000;
+    .profile-user {
+        margin-bottom: 10px;
+    }
+
+    .user-actions {
+        margin-top: 20px !important;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+    }
+
+    .user-actions a,
+    .user-actions form,
+    .file-upload form {
+        width: 90%;
+    }
+
+    .user-actions button,
+    .user-actions a button,
+    .custom-button {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .file-upload {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin: 10px 0;
+    }
+
+    .file-upload form {
+        width: 90%;
+    }
+
+    .file-upload .custom-button {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container_direita_dir {
+        width: 100%;
+    }
+
+    .container_direita {
+        width: 100%;
+        font-size: 16px;
+        margin-right: 0;
+    }
+
+    .mini-menu {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    .mini-menu button {
+        padding: 10px;
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .input-group {
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 15px 0;
+    }
+
+    .informacao_endereco {
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    #canto {
+        margin: 20px auto;
+        display: block;
+        width: 90%;
+    }
+
+    .img-user {
+        width: 100px;
+        height: 100px;
+    }
+
+    .content-section-endereco {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .file-upload {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .user-actions,
+    .file-upload {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    .user-actions a,
+    .user-actions form,
+    .file-upload form {
+        width: 100%;
+    }
+
+    .user-actions button,
+    .user-actions a button,
+    .custom-button {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        border-radius: 5px;
+    }
+
+    .file-upload {
+        display: block;
+        margin: 10px auto;
+    }
+
+    .file-upload form {
+        width: 100%;
+    }
+
+    .file-upload .custom-button {
+        width: 100%;
+        height: 40px;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .profile-user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
 }

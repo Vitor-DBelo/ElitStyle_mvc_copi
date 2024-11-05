@@ -76,12 +76,11 @@ if (!$userData) {
                     </form>
                 </div>
             </div>
-                <div class="user-actions" style="margin-top: 390px; display: flex; gap: 20px; justify-content: left;">
-                    <a href="AlterUser.html"><button class="button">Alterar</button></a>
-                    <form action="../backend/controllers/DeletUser.php" method="POST">
-                        <button type="submit" class="button">Deletar Conta</button>
-                    </form>
-                </div>
+            <div class="user-actions" style="margin-top: 390px; display: flex; gap: 20px; justify-content: left;">
+                <a href="AlterUser.html"><button class="button">Alterar</button></a>
+                <form action="../backend/controllers/DeletUser.php" method="POST">
+                    <button type="submit" class="button">Deletar Conta</button>
+                </form>
             </div>
         </aside>
         
