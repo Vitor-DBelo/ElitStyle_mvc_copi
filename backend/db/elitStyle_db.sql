@@ -107,7 +107,9 @@ INSERT INTO produto (nome, descricao, preco, quantidade_estoque, url) VALUES
 ('aurum noctis', 'Mistura o preto profundo e o branco puro, ideal para quem transita entre o clássico e o moderno com elegância natural.', 235.00, 6, '/img/produtos/acessorios/imga5.png'),
 ('solaris prism', 'Chapéu vibrante com bordado multicolorido, representando a fusão entre o estilo urbano e o luxo atemporal.', 245.00, 20, '/img/produtos/acessorios/imga6.png'),
 ('cortez argentum', 'Uma corrente de elos espessos e polidos, criada para aqueles que valorizam a presença imponente e o estilo refinado.', 305.00, 18, '/img/produtos/acessorios/imga7.png'),
-('véloce platinum', 'Uma corrente prateada de design elegante e sutil, ideal para compor visuais sofisticados e minimalistas com um toque de exclusividade.', 345.00, 10, '/img/produtos/acessorios/imga8.png');
+('véloce platinum', 'Uma corrente prateada de design elegante e sutil, ideal para compor visuais sofisticados e minimalistas com um toque de exclusividade.', 345.00, 10, '/img/produtos/acessorios/imga8.png'),
+('Urban Edge', 'Conjunto masculino confortável e estiloso para o dia a dia.', 150.00, 50, '../public/img/IMGA0.png'),
+('Urban Grace', 'Conjunto feminino minimalista e sofisticado.', 150.00, 50, '../public/img/IMGA00.png');
 
 -- Inserção de categorias
 INSERT INTO categoria (nome_categoria, id_produto) VALUES
@@ -124,13 +126,15 @@ INSERT INTO categoria (nome_categoria, id_produto) VALUES
 ('acessórios', 6),
 ('acessórios', 7),
 ('acessórios', 8),
-('acessórios', 9);
-
+('acessórios', 9),
+('conjuntos', 22),
+('conjuntos', 23);
 -- Modifique os caminhos das imagens nos INSERTs
 UPDATE produto SET url = REPLACE(url, '../public/', '/');
 
 select * from user_db1 ;
 select * from produto;
+select * from categoria;
 
 select * from endereco ;
 describe endereco;
