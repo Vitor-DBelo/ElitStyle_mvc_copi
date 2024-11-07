@@ -1058,3 +1058,57 @@ main-produto {
         width: 100%;
     }
 }
+
+.estoque-info {
+    margin: 10px 0;
+    font-size: 0.9em;
+}
+
+.em-estoque {
+    color: #28a745;
+    font-weight: 500;
+}
+
+.fora-estoque {
+    color: #6c757d;
+    font-weight: 500;
+}
+
+.sem-info {
+    color: #6c757d;
+    font-style: italic;
+}
+
+.estoque-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.estoque-container h2 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.estoque-info {
+    font-size: 20px;
+    display: inline;
+}
+
+.em-estoque {
+    color: #FFD700;
+    font-weight: 500;
+}
+
+.fora-estoque {
+    color: #6c757d;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.sem-info {
+    color: #6c757d;
+    font-style: italic;
+    font-size: 20px;
+}

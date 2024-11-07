@@ -69,10 +69,15 @@ if (!function_exists('base_url')) {
                 </a>
             </div>
             <div class="search-pesqui">
-                <input type="text" class="search-input" placeholder="Pesquise...">
-                <button class="search-icon">
-                  <img src="https://cdn.icon-icons.com/icons2/2645/PNG/512/search_icon_159890.png" alt="Ícone de pesquisa">
-                </button>
+                <form action="filtro.php" method="GET" id="searchForm">
+                    <input type="text" name="search" class="search-input" placeholder="Pesquise..." style="width: 565px;" id="searchInput">
+                    <button type="submit" class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </form>
                 <div class="base-bar"></div>
                 <div class="animation_bar"></div>
             </div>
@@ -136,6 +141,22 @@ if (!function_exists('base_url')) {
                     <button class="button_tamanho">M</button>
                     <button class="button_tamanho">G</button>
                     <button class="button_tamanho">GG</button>
+                </div>
+                <div class="estoque-container">
+                    <h2 style="display: inline;">Estoque: </h2>
+                    <span class="estoque-info">
+                        <?php 
+                        if (isset($produto['quantidade_estoque'])) {
+                            if ($produto['quantidade_estoque'] > 0) {
+                                echo "<span class='em-estoque'>" . $produto['quantidade_estoque'] . " unidades</span>";
+                            } else {
+                                echo "<span class='fora-estoque'><em>Produto indisponível</em></span>";
+                            }
+                        } else {
+                            echo "<span class='sem-info'><em>Não disponível</em></span>";
+                        }
+                        ?>
+                    </span>
                 </div>
                 <h2>Preço</h2>
                 <h3><span>R$ </span><?php echo number_format($produto['preco'], 2, ',', '.'); ?></h3>
@@ -379,6 +400,26 @@ if (!function_exists('base_url')) {
             document.body.style.overflow = '';
             mostrarMensagemTemporaria('Carrinho limpo com sucesso!');
         }
+
+        const searchForm = document.getElementById('searchForm');
+        const searchInput = document.getElementById('searchInput');
+
+        // Previne o envio do formulário se estiver vazio
+        searchForm.addEventListener('submit', function(e) {
+            if (!searchInput.value.trim()) {
+                e.preventDefault();
+                mostrarMensagemTemporaria('Digite algo para pesquisar');
+            }
+        });
+
+        // Adiciona animação na barra de pesquisa
+        searchInput.addEventListener('focus', function() {
+            this.parentElement.querySelector('.animation_bar').style.width = '100%';
+        });
+
+        searchInput.addEventListener('blur', function() {
+            this.parentElement.querySelector('.animation_bar').style.width = '0';
+        });
     });
     </script>
     <script>
