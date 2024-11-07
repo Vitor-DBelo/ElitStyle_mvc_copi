@@ -143,3 +143,39 @@
         width: 100%;
     }
 }
+
+.item-nao-encontrado {
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    font-size: 1.5em;
+    color: #666;
+}
+
+.search-pesqui form {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    outline: none;
+    font-size: 16px;
+}
+
+.search-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.search-icon svg {
+    width: 20px;
+    height: 20px;
+    color: #333;
+}

@@ -1,3 +1,90 @@
+<?php
+require_once('../backend/db/database.php');
+
+// Inicializa as variáveis
+$database = new Database();
+$conn = $database->getConnection();
+$produtos = [];
+$termo_pesquisa = '';
+$marca = '';
+$precoMinimo = 189.00;
+$precoMaximo = isset($_GET['precoMaximo']) ? floatval($_GET['precoMaximo']) : 3800.00;
+$tamanho = '';
+
+// Verifica se existe um termo de pesquisa ou filtros
+if ((isset($_GET['search']) && !empty($_GET['search'])) || 
+    (isset($_GET['marca']) && $_GET['marca'] !== 'todas') || 
+    isset($_GET['precoMinimo']) || 
+    isset($_GET['precoMaximo']) || 
+    isset($_GET['tamanho'])) {
+    
+    $termo_pesquisa = isset($_GET['search']) ? $_GET['search'] : '';
+    $marca = isset($_GET['marca']) ? $_GET['marca'] : 'todas';
+    
+    // Construir a consulta SQL base
+    $sql = "SELECT DISTINCT p.* FROM produto p 
+            LEFT JOIN categoria c ON p.id_produto = c.id_produto 
+            WHERE 1=1";
+    $params = [];
+    $types = "";
+    
+    // Se a marca for 'Fake', prioriza a busca na categoria
+    if ($marca === 'Fake') {
+        $sql = "SELECT DISTINCT p.* FROM produto p 
+                INNER JOIN categoria c ON p.id_produto = c.id_produto 
+                WHERE LOWER(c.nome_categoria) = LOWER(?)";
+        $params[] = $marca;
+        $types .= "s";
+    } else {
+        // Adiciona condições baseadas nos filtros
+        if (!empty($termo_pesquisa)) {
+            if (strtolower(trim($termo_pesquisa)) === 'lançamento' || 
+                strtolower(trim($termo_pesquisa)) === 'lancamento') {
+                $sql = "SELECT DISTINCT p.* FROM produto p WHERE 1=1";
+            } 
+            elseif (strtolower(trim($termo_pesquisa)) === 'acessorios' || 
+                    strtolower(trim($termo_pesquisa)) === 'acessórios') {
+                $sql .= " AND LOWER(c.nome_categoria) = 'acessórios'";
+            }
+            else {
+                $sql .= " AND (LOWER(p.nome) LIKE LOWER(?) OR LOWER(c.nome_categoria) LIKE LOWER(?))";
+                $termo = "%{$termo_pesquisa}%";
+                $params[] = $termo;
+                $params[] = $termo;
+                $types .= "ss";
+            }
+        }
+        
+        // Adiciona filtro de marca (se não for 'Fake')
+        if ($marca !== 'todas') {
+            $sql .= " AND LOWER(p.nome) LIKE LOWER(?)";
+            $marcaTermo = "%{$marca}%";
+            $params[] = $marcaTermo;
+            $types .= "s";
+        }
+    }
+    
+    // Adiciona filtro de preço
+    $sql .= " AND p.preco BETWEEN ? AND ?";
+    $params[] = $precoMinimo;
+    $params[] = $precoMaximo;
+    $types .= "dd";
+    
+    // Prepara e executa a consulta
+    $stmt = $conn->prepare($sql);
+    if (!empty($params)) {
+        $stmt->bind_param($types, ...$params);
+    }
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $produtos[] = $row;
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -22,13 +109,15 @@
                 </a>
             </div>
             <div class="search-pesqui">
-                <input type="text" class="search-input" placeholder="Pesquise...">
-                <button class="search-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
+                <form action="filtro.php" method="GET">
+                    <input type="text" name="search" class="search-input" placeholder="Pesquise..." style="width: 565px; value="<?php echo htmlspecialchars($termo_pesquisa); ?>"> 
+                    <button type="submit" class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </form>
                 <div class="base-bar"></div>
                 <div class="animation_bar"></div>
             </div>
@@ -65,8 +154,12 @@
                     <div id="itens-carrinho"></div>
                     <div id="resumo-carrinho">
                         <h2>Resumo do Pedido</h2>
-                        <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
+                        <div class="total">
+                            <span>Total:</span>
+                            <span id="total-carrinho">R$ 0.00</span>
+                        </div>
                         <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                        <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;">Limpar Carrinho</a>
                     </div>
                 </div>
             </div>
@@ -76,157 +169,64 @@
     <div class="layout">
         <div id="filtro">
             <h3>Filtros</h3>
-            <form action="index.php?route=filtro" method="GET">
-                <input type="hidden" name="route" value="filtro">
+            <form action="filtro.php" method="GET">
+                <input type="hidden" name="search" value="<?php echo htmlspecialchars($termo_pesquisa); ?>">
                 <label for="marca">Marca:</label>
                 <select id="marca" name="marca">
-                    <option value="todas">Todas</option>
-                    <option value="Abidas">Abidas</option>
-                    <option value="New era">New era</option>
-                    <option value="New balance">New balance</option>
-                    <option value="Huf">Huf</option>
-                    <option value="Vans">Vans</option>
-                    <option value="Fake">Fake</option>
-                    <option value="Pumba">Pumba</option>
-                    <option value="Lascou-se">Lascou-se</option>
+                    <option value="todas" <?php echo $marca === 'todas' ? 'selected' : ''; ?>>Todas</option>
+                    <option value="Abidas" <?php echo $marca === 'Abidas' ? 'selected' : ''; ?>>Abidas</option>
+                    <option value="New era" <?php echo $marca === 'New era' ? 'selected' : ''; ?>>New era</option>
+                    <option value="New balance" <?php echo $marca === 'New balance' ? 'selected' : ''; ?>>New balance</option>
+                    <option value="Huf" <?php echo $marca === 'Huf' ? 'selected' : ''; ?>>Huf</option>
+                    <option value="Vans" <?php echo $marca === 'Vans' ? 'selected' : ''; ?>>Vans</option>
+                    <option value="Fake" <?php echo $marca === 'Fake' ? 'selected' : ''; ?>>Fake</option>
+                    <option value="Pumba" <?php echo $marca === 'Pumba' ? 'selected' : ''; ?>>Pumba</option>
+                    <option value="Lascou-se" <?php echo $marca === 'Lascou-se' ? 'selected' : ''; ?>>Lascou-se</option>
                 </select>
+                
                 <label for="precoMinimo">Preço Mínimo:</label>
-                <input type="number" id="precoMinimo" name="precoMinimo" value="20">
+                <input type="number" id="precoMinimo" name="precoMinimo" value="189.00" readonly min="189.00" step="0.01">
+                
                 <label for="precoMaximo">Preço Máximo:</label>
-                <input type="number" id="precoMaximo" name="precoMaximo" value="100">
+                <input type="number" id="precoMaximo" name="precoMaximo" value="<?php echo htmlspecialchars($precoMaximo); ?>" min="189.00" step="0.01">
+                
                 <label for="tamanho">Tamanho:</label>
                 <select id="tamanho" name="tamanho">
-                    <option value="PP">Extra Pequeno (PP)</option>
-                    <option value="P">Pequeno (P)</option>
-                    <option value="M">Médio (M)</option>
-                    <option value="G">Grande (G)</option>
-                    <option value="GG">Extra grande (GG)</option>
+                    <option value="PP" <?php echo $tamanho === 'PP' ? 'selected' : ''; ?>>Extra Pequeno (PP)</option>
+                    <option value="P" <?php echo $tamanho === 'P' ? 'selected' : ''; ?>>Pequeno (P)</option>
+                    <option value="M" <?php echo $tamanho === 'M' ? 'selected' : ''; ?>>Médio (M)</option>
+                    <option value="G" <?php echo $tamanho === 'G' ? 'selected' : ''; ?>>Grande (G)</option>
+                    <option value="GG" <?php echo $tamanho === 'GG' ? 'selected' : ''; ?>>Extra grande (GG)</option>
                 </select>
+                
                 <button type="submit" class="filtro-butt">Aplicar Filtros</button>
             </form>
         </div>
 
         <div class="galeria">
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=2">
-                        <img src="../public/img/produtos/conjunto-01.jpg" alt="Produto 1">
-                    </a>
-                    <figcaption>Produto 1</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=8">
-                        <img src="../public/img/produtos/imgl3.png" alt="Produto 2">
-                    </a>
-                    <figcaption>Produto 2</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=9">
-                        <img src="../public/img/produtos/imgl4.png" alt="Produto 3">
-                    </a>
-                    <figcaption>Produto 3</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=10">
-                        <img src="../public/img/produtos/imgl5.png" alt="Produto 4">
-                    </a>
-                    <figcaption>Produto 4</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=11">
-                        <img src="../public/img/produtos/imgl6.png" alt="Produto 5">
-                    </a>
-                    <figcaption>Produto 5</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=12">
-                        <img src="../public/img/produtos/imgl7.png" alt="Produto 6">
-                    </a>
-                    <figcaption>Produto 6</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=7">
-                        <img src="../public/img/produtos/calsa01.jpg" alt="Produto 7">
-                    </a>
-                    <figcaption>Produto 7</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=13">
-                        <img src="../public/img/produtos/imgl8.png" alt="Produto 8">
-                    </a>
-                    <figcaption>Produto 8</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=9">
-                        <img src="../public/img/produtos/imgl4.png" alt="Produto 9">
-                    </a>
-                    <figcaption>Produto 9</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=5">
-                        <img src="../public/img/produtos/conjunto-4.jpg" alt="Produto 10">
-                    </a>
-                    <figcaption>Produto 10</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=8">
-                        <img src="../public/img/produtos/imgl3.png" alt="Produto 11">
-                    </a>
-                    <figcaption>Produto 11</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=4">
-                        <img src="../public/img/produtos/conjunto-03.jpg" alt="Produto 12">
-                    </a>
-                    <figcaption>Produto 12</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=20">
-                        <img src="../public/img/produtos/acessorios/IMGA7.png" alt="Produto 13">
-                    </a>
-                    <figcaption>Produto 13</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=1">
-                        <img src="../public/img/produtos/calsa01.jpg" alt="Produto 14">
-                    </a>
-                    <figcaption>Produto 14</figcaption>
-                </figure>
-            </div>
-            <div class="galeria-item">
-                <figure class="square">
-                    <a href="produto.php?id=14">
-                        <img src="../public/img/produtos/acessorios/IMGA1.png" alt="Produto 15">
-                    </a>
-                    <figcaption>Produto 15</figcaption>
-                </figure>
-            </div>
+            <?php if (!empty($termo_pesquisa)): ?>
+                <?php if (empty($produtos)): ?>
+                    <div class="item-nao-encontrado">
+                        <p>Item não encontrado</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($produtos as $produto): ?>
+                        <div class="galeria-item">
+                            <figure class="square">
+                                <a href="produto.php?id=<?php echo $produto['id_produto']; ?>">
+                                    <img src="../public<?php echo $produto['url']; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>">
+                                </a>
+                                <figcaption><?php echo htmlspecialchars($produto['nome']); ?></figcaption>
+                            </figure>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            <?php else: ?>
+                <!-- Aqui você pode mostrar todos os produtos ou deixar vazio -->
+                <div class="item-nao-encontrado">
+                    <p>Digite algo para pesquisar</p>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 
@@ -307,9 +307,22 @@
                     <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
                 </div>
                 <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;" ${carrinho.length === 0 ? 'class="disabled"' : ''}>Limpar Carrinho</a>
             `;
 
             document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+            const limparBtn = document.getElementById('limpar-carrinho');
+            if (carrinho.length > 0) {
+                limparBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limparCarrinho();
+                });
+            } else {
+                limparBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    mostrarMensagemTemporaria('O carrinho já está vazio!');
+                });
+            }
         }
 
         window.atualizarQuantidade = function(index, delta) {
@@ -363,8 +376,26 @@
             carrinhoIcon.textContent = '🛒';
         }
 
+        function limparCarrinho() {
+            localStorage.removeItem('carrinho');
+            atualizarCarrinho([]);
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            mostrarMensagemTemporaria('Carrinho limpo com sucesso!');
+        }
+
         // Atualizar o ícone do carrinho ao carregar a página
         atualizarIconeCarrinho();
+    });
+    </script>
+
+    <!-- Adicione este script após o formulário -->
+    <script>
+    document.getElementById('precoMaximo').addEventListener('change', function() {
+        const min = 189.00;
+        if (this.value < min) {
+            this.value = min;
+        }
     });
     </script>
 </body>

@@ -64,6 +64,30 @@ if (!$userData) {
             </ul>
         </nav>
     </header>
+
+    <div class="modal_comprar" id="modal-carrinho" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="top-carrinho">
+                <h1>Seu Carrinho</h1>
+            </div>
+            <div id="main-carrinho">
+                <div id="carrinho">
+                    <div id="itens-carrinho"></div>
+                    <div id="resumo-carrinho">
+                        <h2>Resumo do Pedido</h2>
+                        <div class="total">
+                            <span>Total:</span>
+                            <span id="total-carrinho">R$ 0.00</span>
+                        </div>
+                        <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                        <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;">Limpar Carrinho</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <main class="content-user">
         <aside class="container_esquerda_esq">
             <div class="profile-user">
@@ -174,5 +198,181 @@ document.getElementById('imagem-input').onchange = function(e) {
 }
 
     </script>
+    <div class="modal_comprar" id="modal-carrinho" style="display: none;">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="top-carrinho">
+                <h1>Seu Carrinho</h1>
+            </div>
+            <div id="main-carrinho">
+                <div id="carrinho">
+                    <div id="itens-carrinho"></div>
+                    <div id="resumo-carrinho">
+                        <h2>Resumo do Pedido</h2>
+                        <div class="total">
+                            <span>Total:</span>
+                            <span id="total-carrinho">R$ 0.00</span>
+                        </div>
+                        <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                        <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;">Limpar Carrinho</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carrinhoIcon = document.getElementById('carrinho-icon');
+    const modal = document.getElementById('modal-carrinho');
+    const closeBtn = modal.querySelector('.close');
+
+    carrinhoIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        carregarCarrinho();
+    });
+
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+    });
+
+    function carregarCarrinho() {
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        atualizarCarrinho(carrinho);
+    }
+
+    function atualizarCarrinho(carrinho) {
+        let listaCarrinho = document.getElementById('itens-carrinho');
+        let resumoCarrinho = document.getElementById('resumo-carrinho');
+        
+        listaCarrinho.innerHTML = '';
+        let total = 0;
+
+        carrinho.forEach((item, index) => {
+            let itemDiv = document.createElement('div');
+            itemDiv.className = 'item-carrinho';
+            itemDiv.innerHTML = `
+                <div class="item-imagem">
+                    <img src="${item.imagemUrl}" alt="${item.nome}">
+                </div>
+                <div class="item-detalhes">
+                    <div class="item-texto">
+                        <div class="item-nome">${item.nome}</div>
+                        <div class="item-descricao">${item.descricao}</div>
+                    </div>
+                    <div class="item-info-container">
+                        <div class="item-info-box">
+                            <span class="item-info-label">Quantidade</span>
+                            <div class="quantidade-controle">
+                                <button onclick="atualizarQuantidade(${index}, -1)">-</button>
+                                <span class="item-info-valor">${item.quantidade}</span>
+                                <button onclick="atualizarQuantidade(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="item-info-box">
+                            <span class="item-info-label">Valor unitário</span>
+                            <span class="item-info-valor">R$ ${item.preco.toFixed(2)}</span>
+                        </div>
+                        <div class="item-info-box">
+                            <span class="item-info-label">Preço</span>
+                            <span class="item-info-valor item-preco-total">R$ ${(item.preco * item.quantidade).toFixed(2)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            listaCarrinho.appendChild(itemDiv);
+            total += item.preco * item.quantidade;
+        });
+
+        resumoCarrinho.innerHTML = `
+            <h2>Resumo do Pedido</h2>
+            <div class="total">
+                <span>Total:</span>
+                <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
+            </div>
+            <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+            <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;" ${carrinho.length === 0 ? 'class="disabled"' : ''}>Limpar Carrinho</a>
+        `;
+
+        document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+        const limparBtn = document.getElementById('limpar-carrinho');
+        if (carrinho.length > 0) {
+            limparBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                limparCarrinho();
+            });
+        } else {
+            limparBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                mostrarMensagemTemporaria('O carrinho já está vazio!');
+            });
+        }
+    }
+
+    window.atualizarQuantidade = function(index, delta) {
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        carrinho[index].quantidade += delta;
+        if (carrinho[index].quantidade <= 0) {
+            carrinho.splice(index, 1);
+        }
+        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        atualizarCarrinho(carrinho);
+        atualizarIconeCarrinho();
+    }
+
+    function limparCarrinho() {
+        localStorage.removeItem('carrinho');
+        atualizarCarrinho([]);
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        mostrarMensagemTemporaria('Carrinho limpo com sucesso!');
+    }
+
+    function finalizarCompra(event) {
+        event.preventDefault();
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        if (carrinho.length > 0) {
+            window.location.href = 'compra.html?origem=carrinho';
+        } else {
+            mostrarMensagemTemporaria('Seu carrinho está vazio. Adicione itens antes de finalizar a compra.');
+        }
+    }
+
+    function mostrarMensagemTemporaria(mensagem) {
+        const mensagemDiv = document.createElement('div');
+        mensagemDiv.textContent = mensagem;
+        mensagemDiv.style.cssText = `
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ff6b6b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1000;
+            transition: opacity 0.5s ease-in-out;
+        `;
+        document.body.appendChild(mensagemDiv);
+
+        setTimeout(() => {
+            mensagemDiv.style.opacity = '0';
+            setTimeout(() => {
+                document.body.removeChild(mensagemDiv);
+            }, 500);
+        }, 3000);
+    }
+
+    function atualizarIconeCarrinho() {
+        const carrinhoIcon = document.querySelector('.nav-links a[href="#"]');
+        carrinhoIcon.textContent = '🛒';
+    }
+
+    // Atualizar o ícone do carrinho ao carregar a página
+    atualizarIconeCarrinho();
+});
+</script>
 </body>
 </html>

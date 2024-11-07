@@ -107,8 +107,12 @@ if (!function_exists('base_url')) {
                     <div id="itens-carrinho"></div>
                     <div id="resumo-carrinho">
                         <h2>Resumo do Pedido</h2>
-                        <p class="total-crn">Total: R$ <span id="total-carrinho">0.00</span></p>
-                        <a href="compra.html?origem=carrinho" id="finalizar-compra">Finalizar Compra</a>
+                        <div class="total">
+                            <span>Total:</span>
+                            <span id="total-carrinho">R$ 0.00</span>
+                        </div>
+                        <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                        <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;">Limpar Carrinho</a>
                     </div>
                 </div>
             </div>
@@ -277,9 +281,22 @@ if (!function_exists('base_url')) {
                     <span id="total-carrinho">R$ ${total.toFixed(2)}</span>
                 </div>
                 <a href="compra.html?origem=carrinho" id="finalizar-compra" class="finalizar-compra-btn">Finalizar Compra</a>
+                <a href="#" id="limpar-carrinho" style="color: #aaa; font-size: 14px; text-decoration: none; display: block; text-align: center; margin-top: 15px; padding: 5px; border-bottom: 1px solid #ddd;" ${carrinho.length === 0 ? 'class="disabled"' : ''}>Limpar Carrinho</a>
             `;
 
             document.getElementById('finalizar-compra').addEventListener('click', finalizarCompra);
+            const limparBtn = document.getElementById('limpar-carrinho');
+            if (carrinho.length > 0) {
+                limparBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    limparCarrinho();
+                });
+            } else {
+                limparBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    mostrarMensagemTemporaria('O carrinho já está vazio!');
+                });
+            }
         }
 
         window.atualizarQuantidade = function(index, delta) {
@@ -353,6 +370,15 @@ if (!function_exists('base_url')) {
 
         // Atualizar o ícone do carrinho ao carregar a página
         atualizarIconeCarrinho();
+
+        // Adicione a função limparCarrinho aqui, dentro do DOMContentLoaded
+        function limparCarrinho() {
+            localStorage.removeItem('carrinho');
+            atualizarCarrinho([]);
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+            mostrarMensagemTemporaria('Carrinho limpo com sucesso!');
+        }
     });
     </script>
     <script>
