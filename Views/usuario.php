@@ -22,6 +22,22 @@ if (!$userData) {
     <link rel="stylesheet" href="../public/css/style.css">
     <link rel="stylesheet" href="../public/css/animation.css">
     <link rel="stylesheet" href="../public/css/modal.css">
+    <link rel="stylesheet" href="../public/css/menu-mobile.css">
+    <style>
+         #searchInput {
+            width: 565px;
+        }
+        @media screen and (max-width: 1536px) {
+            #searchInput {
+                width: 370px;
+            }
+        }
+        @media screen and (min-width: 100px) and (max-width: 600px) {
+            #searchInput {
+                width: 100px;
+            }
+        }
+    </style>
     
 </head>
 <body>
@@ -34,23 +50,27 @@ if (!$userData) {
                 </a>
             </div>
             <div class="search-pesqui">
-                <input type="text" class="search-input" placeholder="Pesquise...">
-                <button class="search-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                    </svg>
-                </button>
+                <form action="filtro.php" method="GET" id="searchForm">
+                    <input type="text" name="search" class="search-input" placeholder="Pesquise..."  id="searchInput">
+                    <button type="submit" class="search-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </form>
                 <div class="base-bar"></div>
                 <div class="animation_bar"></div>
             </div>
-            <div class="menu-icon">
-                <img src="../public/img/icon/icon_hamburger.png" alt="Menu"> 
-            </div>
             <ul class="nav-links">
-                <li><a href="index.html">Lançamentos</a></li>
-                <li><a href="index.html">Marcas</a></li>
-                <li><a href="index.html">Acessórios</a></li>
+                <div class="hamburger-menu">
+                    <a href="menu.html">
+                        <img src="../public/img/icon/icon_hamburger.png" alt="Menu" style="width: 30px; height: 30px;">
+                    </a>
+                </div>
+                <li><a href="index.html#lancamentos">Lançamentos</a></li>
+                <li><a href="index.html#marcas">Marcas</a></li>
+                <li><a href="index.html#acessorios">Acessórios</a></li>
                 <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
                     <img src="<?php echo $imagemPerfil; ?>" alt="Foto do usuário">
@@ -373,6 +393,45 @@ document.addEventListener('DOMContentLoaded', function() {
     // Atualizar o ícone do carrinho ao carregar a página
     atualizarIconeCarrinho();
 });
+</script>
+<div class="overlay"></div>
+<div class="menu-mobile">
+    <button class="close-btn">×</button>
+    <ul>
+        <li><a href="index.html#lancamentos">Lançamentos</a></li>
+        <li><a href="index.html#acessorios">Acessórios</a></li>
+        <li><a href="#" id="carrinho-icon-mobile">🛒</a></li>
+        <hr class="separator">
+        <li><a href="usuario.php">Editar</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+</div>
+<script src="../public/script/menu-mobile.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Seleciona os elementos do menu mobile
+        const menuIcon = document.querySelector('.menu-icon');
+        const menuMobile = document.querySelector('.menu-mobile');
+        const overlay = document.querySelector('.overlay');
+        const closeBtn = document.querySelector('.close-btn');
+
+        // Abre o menu mobile
+        menuIcon.addEventListener('click', function() {
+            menuMobile.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        // Fecha o menu mobile
+        function closeMenu() {
+            menuMobile.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        closeBtn.addEventListener('click', closeMenu);
+        overlay.addEventListener('click', closeMenu);
+    });
 </script>
 </body>
 </html>

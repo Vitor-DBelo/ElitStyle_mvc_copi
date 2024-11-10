@@ -716,7 +716,7 @@ main-produto {
         width: 100%;
     }
     .title_grid{
-        margin-left: 90px;
+        margin-left: 20px;
     }
     .container_esquerda_esq {
         width: 50%;
@@ -805,6 +805,11 @@ main-produto {
     }
 }
 
+.hamburger-menu{
+    display: none;
+    
+}
+
 /* Media query para mobile */
 @media screen and (min-width: 100px) and (max-width: 600px) {
     .content {
@@ -814,7 +819,7 @@ main-produto {
         margin: 0;
         margin-top: 69px;
     }
-    .icon_hamburger{
+    .hamburger-menu{
         display: flex;
     }
     .content img {
@@ -1057,6 +1062,97 @@ main-produto {
         align-items: center;
         width: 100%;
     }
+
+    .content-pg-Produto {
+        flex-direction: column;
+        margin-top: 60px;
+        padding: 10px;
+        gap: 15px;
+    }
+
+    .produto-descri {
+        width: 100%;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .produto-descri img {
+        width: 400px;
+        height: 400px;
+        object-fit: cover;
+    }
+
+    .produto-descri p {
+        width: 100%;
+        padding: 15px;
+        margin-top: 20px;
+        text-align: justify;
+    }
+
+    .produto-info {
+        width: 100%;
+        margin: 0;
+        padding: 15px;
+        margin-bottom: 100px; /* Espaço para os botões fixos */
+    }
+
+    .produto-info h1 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    .produto-info h2 {
+        font-size: 20px;
+        margin: 10px 0;
+    }
+
+    .tamanho {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-start;
+        margin: 15px 0;
+    }
+
+    .button_tamanho {
+        padding: 8px 12px;
+    }
+
+    .estoque-container {
+        margin: 15px 0;
+    }
+
+    .button-submit {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px;
+        background-color: #151515;
+        z-index: 999;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .button-submit button {
+        width: 100%;
+        height: 45px;
+        margin: 0;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .carousel-proprock {
+        margin-bottom: 100px; /* Espaço para os botões fixos */
+    }
+
+    .item-carousel-roll {
+        min-width: 150px;
+        height: 150px;
+    }
+  
 }
 
 .estoque-info {
@@ -1111,4 +1207,35 @@ main-produto {
     color: #6c757d;
     font-style: italic;
     font-size: 20px;
+}
+
+@media screen and (min-width: 100px) and (max-width: 600px) {
+    .nav-links li:not(.hamburger-menu) {
+        display: none;
+    }
+    
+    .hamburger-menu {
+        display: block;
+    }
+    
+    .main-produto {
+        padding: 10px;
+    }
+    
+    .content-pg-Produto {
+        flex-direction: column;
+    }
+    
+    .produto-descri {
+        width: 100%;
+    }
+    
+    .produto-info {
+        width: 100%;
+        margin-top: 20px;
+    }
+    
+    .carousel-proprock {
+        padding: 10px;
+    }
 }

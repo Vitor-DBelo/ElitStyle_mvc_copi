@@ -96,11 +96,31 @@ if ((isset($_GET['search']) && !empty($_GET['search'])) ||
     <link rel="stylesheet" href="../public/css/animation.css">
     <link rel="stylesheet" href="../public/css/filtro.css">
     <link rel="stylesheet" href="../public/css/modal.css">
+    <link rel="stylesheet" href="../public/css/menu-mobile.css">
     <!-- Adicione o script do ScrollReveal -->
     <script src="https://unpkg.com/scrollreveal"></script>
+    <style>
+      #searchInput {
+            width: 565px;
+        }
+        @media screen and (max-width: 1536px) {
+            #searchInput {
+                width: 370px;
+            }
+        }
+        @media screen and (min-width: 100px) and (max-width: 600px) {
+            #searchInput {
+                width: 100px;
+            }
+        }
+        .search-input{
+            border: none;
+            border-bottom: 0;
+        }
+    </style>
 </head>
 <body>
-    <header> 
+<header> 
         <nav class="Nav_Bar">
             <div class="logo">
                 <a href="index.html" class="logo-link">
@@ -109,25 +129,27 @@ if ((isset($_GET['search']) && !empty($_GET['search'])) ||
                 </a>
             </div>
             <div class="search-pesqui">
-                <form action="filtro.php" method="GET">
-                    <input type="text" name="search" class="search-input" placeholder="Pesquise..." style="width: 565px; value="<?php echo htmlspecialchars($termo_pesquisa); ?>"> 
+                <form action="filtro.php" method="GET" id="searchForm">
+                    <input type="text" name="search" class="search-input" placeholder="Pesquise..." id="searchInput">
                     <button type="submit" class="search-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="8"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
                     </button>
+                    <div class="base-bar"></div>
+                    <div class="animation_bar"></div>
                 </form>
-                <div class="base-bar"></div>
-                <div class="animation_bar"></div>
-            </div>
-            <div class="menu-icon">
-                <img src="../public/img/icon/icon_hamburger.png" alt="Menu"> 
             </div>
             <ul class="nav-links">
-                <li><a href="index.html">Lançamentos</a></li>
-                <li><a href="index.html">Marcas</a></li>
-                <li><a href="index.html">Acessórios</a></li>
+                <div class="hamburger-menu">
+                    <a href="menu.html">
+                        <img src="../public/img/icon/icon_hamburger.png" alt="Menu" style="width: 30px; height: 30px;">
+                    </a>
+                </div>
+                <li><a href="#lancamentos">Lançamentos</a></li>
+                <li><a href="#marcas">Marcas</a></li>
+                <li><a href="#acessorios">Acessórios</a></li>
                 <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
                     <img src="https://i.pinimg.com/564x/cb/2d/a9/cb2da9b8e06f5e2addc04d92d9fb64a1.jpg" alt="Foto do usuário">
@@ -398,5 +420,19 @@ if ((isset($_GET['search']) && !empty($_GET['search'])) ||
         }
     });
     </script>
+
+    <div class="overlay"></div>
+    <div class="menu-mobile">
+        <button class="close-btn">×</button>
+        <ul>
+            <li><a href="index.html#lancamentos">Lançamentos</a></li>
+            <li><a href="index.html#acessorios">Acessórios</a></li>
+            <li><a href="#" id="carrinho-icon-mobile">🛒</a></li>
+            <hr class="separator">
+            <li><a href="usuario.php">Editar</a></li>
+            <li><a href="login.html">Login</a></li>
+        </ul>
+    </div>
+    <script src="../public/script/menu-mobile.js"></script>
 </body>
 </html>

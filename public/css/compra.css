@@ -345,3 +345,119 @@ striked {
         max-width: 700px; /* Ajusta o tamanho do modal */
     }
 }
+
+@media screen and (min-width: 100px) and (max-width: 600px) {
+    .Nav_compra {
+        height: 50px;
+        font-size: 16px;
+        padding: 5px 10px;
+    }
+
+    .Nav_compra ul li a {
+        font-size: 14px;
+    }
+
+    .logo {
+        margin-left: 5px;
+        transform: scale(1.5);
+    }
+
+    .content_payment {
+        flex-direction: column;
+        margin-top: 70px;
+        height: auto;
+        padding: 10px;
+    }
+
+    .option_payment {
+        width: 100%;
+        gap: 20px;
+    }
+
+    .option_payment h2 {
+        font-size: 24px;
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+
+    .payment-option {
+        width: 95%;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    .payment-icon {
+        width: 30px;
+    }
+
+    .card-icons img {
+        width: 30px;
+    }
+
+    .order-summary {
+        width: 100%;
+        margin: 20px auto;
+        padding: 0 10px;
+    }
+
+    .order-summary h2 {
+        font-size: 24px;
+    }
+
+    .order-details {
+        width: 100%;
+    }
+
+    .continue-btn {
+        width: 100%;
+        font-size: 16px;
+        padding: 12px;
+    }
+
+    /* Ajustes para o modal de cartão */
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #form-checkout input,
+    #form-checkout select,
+    .container-cartao {
+        width: 100%;
+    }
+
+    /* Ajustes para textos e descrições */
+    .card-icons p {
+        font-size: 14px;
+    }
+
+    .lix p {
+        font-size: 14px;
+    }
+
+    /* Ajuste para o resumo do pedido */
+    .produto-item p {
+        font-size: 14px;
+    }
+
+    .order-details p {
+        font-size: 16px;
+    }
+
+    /* Ajuste para o modal de PIX e Boleto */
+    #modalPix .modal-content,
+    #modalBoleto .modal-content {
+        padding: 10px;
+    }
+
+    #modalPix img {
+        max-width: 100%;
+        height: auto;
+    }
+}
