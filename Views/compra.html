@@ -17,7 +17,7 @@
                 </a>
             </div>
             <ul class="nav_links_compra">
-                <li><a href="filtro.html">CONTINUAR COMPRANDO</a></li>
+                <li><a href="filtro.php">CONTINUAR COMPRANDO</a></li>
             </ul>
         </nav>
     </header>
@@ -76,7 +76,7 @@
                 <div class="order-details">
                     <!-- Lista de produtos -->
                     <div id="produtos-lista">
-                        <!-- Os produtos serão inseridos aqui dinamicamente -->
+                       
                     </div>
                     <hr>
                     <p>Entrega garantida: <span class="free">GRÁTIS</span></p>
@@ -92,8 +92,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Pagamento via PIX</h2>
-            <img src={`data:image/jpeg;base64,${qr_code_base64}`}/>
-            <p>Código PIX: <span id="pixCode">12345678901234567890</span></p>
+            <img src="../public/img/QR.png"/ style="width: 300px; height: auto; ">
+            <p>Código PIX: <span id="pixCode">42d1f8d503d6b7c8c7b74c22a35cda20</span></p>
             <button onclick="copiarCodigo()">Copiar código</button>
         </div>
     </div>

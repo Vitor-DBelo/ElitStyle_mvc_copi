@@ -23,7 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         unset($_SESSION['verification_token']);
         unset($_SESSION['verification_email']);
         
-        // Redirecionar para a página de usuário
         header("Location: ../../Views/index.html");
         exit();
     } else {
@@ -37,4 +36,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Se alguém tentar acessar diretamente este arquivo
 header("Location: ../../Views/login.html");
 exit();
-?>

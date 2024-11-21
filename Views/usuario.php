@@ -73,7 +73,7 @@ if (!$userData) {
                 <li><a href="index.html#acessorios">Acessórios</a></li>
                 <li><a href="#" id="carrinho-icon">🛒</a></li>
                 <li class="user-profile">
-                    <img src="<?php echo $imagemPerfil; ?>" alt="Foto do usuário">
+                    <img src="../public/img/perfil/gato.jpg" alt="Foto do usuário">
                     <div class="dropdown-menu">
                         <ul>
                             <li><a href="#">Editar</a></li>
@@ -111,7 +111,7 @@ if (!$userData) {
     <main class="content-user">
         <aside class="container_esquerda_esq">
             <div class="profile-user">
-                <img class="img-user" src="<?php echo $imagemPerfil; ?>" alt="Imagem de Perfil">
+                <img class="img-user" src="../public/img/perfil/gato.jpg" alt="Imagem de Perfil">
                 <p class="user-name"><?php echo htmlspecialchars($userData['nome']); ?></p>
                 <div class="file-upload">
                     <form action="../backend/controllers/UserimgPerfil.php" method="POST" enctype="multipart/form-data">
@@ -124,6 +124,9 @@ if (!$userData) {
                 <a href="AlterUser.html"><button class="button">Alterar</button></a>
                 <form action="../backend/controllers/DeletUser.php" method="POST">
                     <button type="submit" class="button">Deletar Conta</button>
+                </form>
+                <form action="../backend/controllers/Logout.php" method="POST">
+                    <button type="submit" class="button">Sair</button>
                 </form>
             </div>
         </aside>
