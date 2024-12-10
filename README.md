@@ -45,19 +45,19 @@ Para rodar este projeto em localhost, você precisa ter os seguintes programas i
    Execute o comando abaixo para copiar o repositório para o seu ambiente local:
    ```bash
    git clone https://github.com/Vitor-DBelo/ElitStyle_mvc_copi.git
-2. **Acesse o projeto pelo navegador:**
+2. **Acesse o projeto pelo navegador:**<br>
    Para acessar o projeto em localhost, abra seu navegador e insira o seguinte endereço:
 
    localhost/[nome-do-diretorio]/Views/
 
-4.**Recomenda-se excluir os arquivos composer.lock e composer.json:**
-    Se você encontrar problemas com as dependências, recomendo excluir os arquivos composer.lock e composer.json e realizar a instalação das dependências novamente.
+4.**Recomenda-se excluir os arquivos composer.lock e composer.json:**<br>
+    Se você encontrar problemas com as dependências, recomendo excluir os arquivos composer.lock e composer.json e realizar a instalação das dependências novamente.<br>
 
 5. **Instale as dependências do projeto:**
    - [Composer](https://getcomposer.org): Gerenciador de dependências do PHP.  
    - [PHPMailer](https://github.com/PHPMailer/PHPMailer): Para envio de e-mails.
   
-
+<br>
 <p>
 Esse README inclui as instruções completas para rodar o projeto, como acessar pelo navegador, clonar o repositório, e recomendações para lidar com as dependências do Composer.🚀🚀
 </p>
